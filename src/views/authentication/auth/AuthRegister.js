@@ -11,7 +11,7 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
 
  
   const handleSubmit = async (data) => {
-    try {
+        try {
       let resigterInfo;
       if(!hasCode) 
         resigterInfo= {...data,referral_code:null};
@@ -103,7 +103,9 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
                 />
                 <FormControlLabel
                   control={<Checkbox defaultChecked={hasCode} onChange={() =>setHasCode(!hasCode) } />}
-                  label="Have a Code"
+                  label="I have a Referral Code"
+                  class_name="col-12"
+                  style={{ marginBottom: '10px' }}
                 />
                 {hasCode && <Input
                   name="referral_code"

@@ -1,15 +1,25 @@
 import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import { FormBuilder, Input, Select } from 'src/components/forms/FormBuilder';
 import { register } from 'src/services/query/user';
 import { toast } from 'react-toastify';
 
 const AuthRegister = ({ title, subtitle, subtext }) => {
+  const [hasCode, setHasCode] = React.useState(false);
+
+ 
   const handleSubmit = async (data) => {
-    try {
-      const res = await register(data);
-      toast.success('User created!');
-      console.log(res);
+        try {
+      let resigterInfo;
+      if(!hasCode) 
+        resigterInfo= {...data,referral_code:null};
+      else 
+         resigterInfo = data;
+      // const res = await register(resigterInfo);
+      // console.log(res);
+      console.log(resigterInfo);
     } catch (error) {
       toast.error('User creation failed!');
     } finally {
@@ -91,14 +101,21 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
                     { name: 'Female', value: 'F' },
                   ]}
                 />
-                <Input
+                <FormControlLabel
+                  control={<Checkbox defaultChecked={hasCode} onChange={() =>setHasCode(!hasCode) } />}
+                  label="I have a Referral Code"
+                  class_name="col-12"
+                  style={{ marginBottom: '10px' }}
+                />
+                {hasCode && <Input
                   name="referral_code"
                   register={register}
                   errors={errors}
-                  required={true}
-                  class_name="col-12"
+                  required={hasCode}
+                  className="col-12"
                   label={'Code'}
-                />
+                  disabled={!hasCode}
+                />}
                 <Box>
                   <Button color="primary" variant="contained" size="large" fullWidth type="submit">
                     Register

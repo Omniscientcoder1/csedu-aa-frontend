@@ -14,6 +14,7 @@ import BlogDetailsPage from 'src/views/user/blogs/BlogDetails';
 import EventsDetails from 'src/views/user/events/EventDetails';
 import StudentDetails from 'src/views/user/students/StudentDetails';
 import HallOfFame from 'src/views/admin/hall-of-fame/HallOfFame';
+import PendingRegistrations from 'src/views/admin/pending-registrations/PendingRegistrations';
 
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
@@ -76,6 +77,15 @@ const Router = [
         element: (
           <AuthGuard>
             <EmailsManagement />
+          </AuthGuard>
+        ),
+      },
+      {
+        path: '/pending-registrations',
+        exact: true,
+        element: (
+          <AuthGuard>
+            <PendingRegistrations />
           </AuthGuard>
         ),
       },

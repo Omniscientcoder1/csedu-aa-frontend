@@ -4,6 +4,7 @@ import {
   CalendarToday,
   EmailOutlined,
   Event,
+  PendingActions
 } from '@mui/icons-material';
 import { IconWriting } from '@tabler/icons';
 
@@ -27,6 +28,13 @@ const Menuitems = [
     title: 'Emails Management',
     icon: EmailOutlined,
     href: '/emails-management',
+    admin: true,
+  },
+  {
+    id: uniqueId(),
+    title: 'Pending Registrations',
+    icon: PendingActions,
+    href: '/pending-registrations',
     admin: true,
   },
   {

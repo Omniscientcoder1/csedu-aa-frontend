@@ -5,7 +5,7 @@ import CardHeader from '@mui/material/CardHeader';
 
 // ** Demo Components Imports
 import TableWithFilter from 'src/components/tables/TableWithFilter';
-import {  getUsers } from 'src/services/query/user';
+import {  getPendingUsers, acceptOrDeclineUser } from 'src/services/query/user';
 import { Button } from '@mui/material';
 import { toast } from 'react-toastify';
 import { useContext, useState } from 'react';
@@ -31,23 +31,21 @@ const PendingRegistrations = () => {
 
   const handleAccept = async (username) => {
     try {
-      // call backend to accept by username
-      
+      await acceptOrDeclineUser(username, true);      
       setForceReload((state) => !state);
       toast.success(`${username} has been accepted`);
     } catch (error) {
-      toast.error('Error adding new Admin!');
+      toast.error('Error accepting user!');
     }
   };
 
   const handleDecline = async (username) => {
     try {
-      // call backend to decline by username
-      
+      await acceptOrDeclineUser(username, false);
       setForceReload((state) => !state);
       toast.warning(`${username} has been declined`);
     } catch (error) {
-      toast.error('Error adding new Admin!');
+      toast.error('Error declining user!');
     }
   };
 
@@ -80,7 +78,7 @@ const PendingRegistrations = () => {
             forceReload={forceReload}
             columns={columns}
             filterFields={filterFields}
-            fetchData={getUsers}
+            fetchData={getPendingUsers}
             onSelectionChange={onselectionchange}
           />
         </Card>

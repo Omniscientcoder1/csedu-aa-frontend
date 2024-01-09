@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Button } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -8,7 +9,7 @@ import { toast } from 'react-toastify';
 
 const AuthRegister = ({ title, subtitle, subtext }) => {
   const [hasCode, setHasCode] = React.useState(false);
-
+  const navigate = useNavigate();
  
   const handleSubmit = async (data) => {
         try {
@@ -17,9 +18,11 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
         resigterInfo= {...data,referral_code:null};
       else 
          resigterInfo = data;
-      // const res = await register(resigterInfo);
-      // console.log(res);
+      const res = await register(resigterInfo);
+      console.log(res);
       console.log(resigterInfo);
+      toast.success('User creation succeeded!');
+      navigate('/auth/login');
     } catch (error) {
       toast.error('User creation failed!');
     } finally {

@@ -14,8 +14,18 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
       console.log(res);
       toast.success(`You are successfully logged in.`);
     } catch (error) {
+      const statusCode = error.response?.status;
+
+      // Handle different toasts based on the status code
+      if (statusCode === 401) {
+        toast.error('Invalid Login Credentials.'); // Toast for 401 Unauthorized
+      } else if (statusCode === 403) {
+        toast.warning('Your account is pending approval.'); // Toast for 403 Forbidden
+      } else {
+        toast.error(`An error occurred.`); // Generic error toast
+      }
+
       console.log(error);
-      toast.error(`Invalid Login Credentials.`);
     } finally {
     }
   };

@@ -19,6 +19,21 @@ export const getUsers = async (data) => {
   }
 };
 
+export const getPendingUsers = async (data) => {
+  try {
+    const response = await privateAxios.get(`${endpoints.PENDING_USERS}`, { params: data });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const acceptOrDeclineUser = async (username, accept) => {
+  return await privateAxios.post(`/accounts/pending-users/${username}/`, {
+    accept: accept,
+  });
+};
+
 export const getUserDetailByUsername = async (username) => {
   try {
     const response = await privateAxios.get(`${endpoints.PROFILES}${username}/`);

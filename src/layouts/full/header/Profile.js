@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { LocalStorage } from 'src/services/storage/localstorage';
+import { STORAGE_KEY_ACCESS_TOKEN, STORAGE_KEY_REFRESH_TOKEN } from 'src/constants/localstorage';
 import {
   Avatar,
   Box,
@@ -32,7 +34,8 @@ const Profile = () => {
     try {
       console.log('Here');
       await logoutUser();
-      navigate('/auth/login');
+      console.log(LocalStorage.getData(localStorage, STORAGE_KEY_ACCESS_TOKEN));
+      navigate('home');
     } catch (error) {
       console.log(error);
     }

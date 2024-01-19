@@ -1,1 +1,1 @@
-# CSEDU Connect
+# CSEDU Alumni Association

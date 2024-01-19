@@ -16,8 +16,8 @@ const Logo = () => {
         <LogoDark height={70} />
       </LinkStyled>
       <div>
-        <h3 className="mb-0 mt-1">CSEDU</h3>
-        <h6 style={{ letterSpacing: 2 }}>CONNECT</h6>
+        <h3 classNacme="mb-0 mt-1">CSEDU</h3>
+        <h6 style={{ letterSpacing: 2 }}>ALUMNI ASSOCIATION</h6>
       </div>
     </div>
   );

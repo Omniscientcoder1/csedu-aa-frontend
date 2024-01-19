@@ -15,13 +15,16 @@ import EventsDetails from 'src/views/user/events/EventDetails';
 import StudentDetails from 'src/views/user/students/StudentDetails';
 import HallOfFame from 'src/views/admin/hall-of-fame/HallOfFame';
 import PendingRegistrations from 'src/views/admin/pending-registrations/PendingRegistrations';
+import UnAuthGuard from 'src/components/container/UnAuthGuard';
 
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
 const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')));
+const NoSidebarLayout = Loadable(lazy(() => import('../layouts/full/NoSidebarLayout')));
 
 /* ****Pages***** */
 const Dashboard = Loadable(lazy(() => import('../views/dashboard/Dashboard')));
+const NonAuthenticatedDashboard = Loadable(lazy(() => import('../views/dashboard/NonAuthenticatedDashboard')));
 const Icons = Loadable(lazy(() => import('../views/icons/Icons')));
 const TypographyPage = Loadable(lazy(() => import('../views/utilities/TypographyPage')));
 const Shadow = Loadable(lazy(() => import('../views/utilities/Shadow')));
@@ -196,8 +199,28 @@ const Router = [
     element: <BlankLayout />,
     children: [
       { path: '404', element: <Error /> },
-      { path: '/auth/register', element: <Register /> },
-      { path: '/auth/login', element: <Login /> },
+      { path: '/auth/register', element: (
+      <UnAuthGuard>
+        <Register />
+      </UnAuthGuard>
+      ) },
+      { path: '/auth/login', element: (
+      <UnAuthGuard>
+        <Login />
+      </UnAuthGuard>
+      ) },
+      { path: '*', element: <Navigate to="/auth/404" /> },
+    ],
+  },
+  {
+    path: '/home',
+    element: <NoSidebarLayout />,
+    children: [
+      { path: '/home', element: (
+      <UnAuthGuard>
+        <NonAuthenticatedDashboard />
+      </UnAuthGuard>
+      ) },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },

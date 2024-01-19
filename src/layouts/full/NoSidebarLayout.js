@@ -1,7 +1,7 @@
 import React from "react";
 import { styled, Container, Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import Header from "./header/Header";
+import HeaderLoggedOut from "./header/HeaderLoggedOut";
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",
@@ -22,7 +22,7 @@ const NoSidebarLayout = () => {
   return (
     <MainWrapper className="mainwrapper">
       <PageWrapper className="page-wrapper">
-        <Header />
+        <HeaderLoggedOut />
         <Container
           sx={{
             paddingTop: "20px",

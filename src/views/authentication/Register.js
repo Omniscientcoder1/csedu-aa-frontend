@@ -38,7 +38,7 @@ const Register2 = () => (
           >
             <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '500px' }}>
               <Box display="flex" alignItems="center" justifyContent="center">
-                <h3>CSEDU Connect</h3>
+                <h3>CSEDU Alumni Association</h3>
               </Box>
               <AuthRegister
                 subtext={

@@ -1,4 +1,4 @@
-import { Divider, Paper, Typography } from '@mui/material';
+import { Divider, Paper, Typography, Grid } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
@@ -35,6 +35,16 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     width: '100%',
   },
+  committeeHeader: {
+    textAlign: 'center', 
+    marginBottom: '10px',
+    marginTop: '30px',
+  },
+  centeredDivider: {
+    width: '25%', 
+    margin: 'auto', 
+    marginTop: '30px',
+  }
 }));
 
 
@@ -57,15 +67,6 @@ const Dashboard = ({ title, caption, images }) => {
 
   const handleImageChange = (index) => {
     setSelectedImageIndex(index);
-  };
-
-  //For Committee Slider
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1
   };
 
   const fetchCommittee = async (data) => {
@@ -145,8 +146,8 @@ const Dashboard = ({ title, caption, images }) => {
         <Divider
           sx={{
             height: 4,
-            backgroundColor: '#000', // change color as needed
-            margin: '16px 0', // adjust margin as needed
+            backgroundColor: '#000', 
+            margin: '16px 0', 
           }}
         />
         <p style={{ textAlign: 'justify' }}>
@@ -161,7 +162,22 @@ const Dashboard = ({ title, caption, images }) => {
         </p>
       </div>
 
-      <CommitteeSlider committee={committee} />
+
+      <div className={classes.root}>
+        <Grid container>
+          <Grid item xs={12} className={classes.committeeHeader}>
+            <Typography variant="h3">Current Committee</Typography>
+            <Divider sx={{
+            height: 4,
+            backgroundColor: '#000', // change color as needed
+            margin: '16px 0', // adjust margin as needed
+          }}
+          className={classes.centeredDivider} />
+          </Grid>
+        </Grid>
+        <CommitteeSlider committee={committee} />
+      </div>
+      
       
 
     </div>

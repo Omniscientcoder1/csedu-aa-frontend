@@ -1,9 +1,12 @@
-import { Divider, Paper, Typography } from '@mui/material';
+import { Divider, Paper, Typography, Grid } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { getCards } from 'src/services/query/cards';
+import CommitteeSlider from 'src/components/shared/CommitteeSlider';
+import { getCommittee } from 'src/services/query/committee';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,13 +35,26 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     width: '100%',
   },
+  committeeHeader: {
+    textAlign: 'center', 
+    marginBottom: '10px',
+    marginTop: '30px',
+  },
+  centeredDivider: {
+    width: '25%', 
+    margin: 'auto', 
+    marginTop: '30px',
+  }
 }));
+
 
 const Dashboard = ({ title, caption, images }) => {
   const classes = useStyles();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [cards, setCards] = useState([]);
+  const [committee, setCommittee] = useState([]);
 
+  //For Cover Slider
   const fetch = async (data) => {
     try {
       const res = await getCards();
@@ -49,13 +65,24 @@ const Dashboard = ({ title, caption, images }) => {
     }
   };
 
-  useEffect(() => {
-    fetch();
-  }, []);
-
   const handleImageChange = (index) => {
     setSelectedImageIndex(index);
   };
+
+  const fetchCommittee = async (data) => {
+    try {
+      const res = await getCommittee();
+      setCommittee(res);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  };
+
+  useEffect(() => {
+    fetch();
+    fetchCommittee();
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -113,6 +140,46 @@ const Dashboard = ({ title, caption, images }) => {
         welcome all in our community who are willing to take the challenge. Welcome to progress.
         Welcome to CSEDU.
       </p>
+
+      <div className={classes.root}>
+        <h3>About CSEDUAA</h3>
+        <Divider
+          sx={{
+            height: 4,
+            backgroundColor: '#000', 
+            margin: '16px 0', 
+          }}
+        />
+        <p style={{ textAlign: 'justify' }}>
+          CSEDU Alumni Association is a vibrant community of past graduates who have walked the halls of the University of Dhaka's prestigious CSE department. This association is not just an alumni network; it is a family of professionals, pioneers, and trailblazers who have gone on to make significant contributions in the field of technology and beyond.
+        </p>
+
+        <p style={{ textAlign: 'justify' }}>
+          Through CSEDUAA, alumni have the opportunity to give back to their alma mater in various ways, including guest lectures, scholarship programs, and collaborative research projects. The association is dedicated to upholding the legacy of excellence associated with the CSE department of the University of Dhaka and strives to contribute positively to the tech community both locally and globally.
+        </p>
+        <p style={{ textAlign: 'justify' }}>
+          Joining CSEDUAA is more than just staying connected; it's about being a part of a continuing journey of innovation and excellence. We welcome all CSEDU alumni to be a part of this ever-growing family. 
+        </p>
+      </div>
+
+
+      <div className={classes.root}>
+        <Grid container>
+          <Grid item xs={12} className={classes.committeeHeader}>
+            <Typography variant="h3">Current Committee</Typography>
+            <Divider sx={{
+            height: 4,
+            backgroundColor: '#000', // change color as needed
+            margin: '16px 0', // adjust margin as needed
+          }}
+          className={classes.centeredDivider} />
+          </Grid>
+        </Grid>
+        <CommitteeSlider committee={committee} />
+      </div>
+      
+      
+
     </div>
   );
 };

@@ -1,11 +1,13 @@
 import { Button, MenuItem, TextField } from '@mui/material';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { SelectWithFilter } from './SelectWithFilter';
 
 const FilterBuilder = ({ filterFields, handleFilterSubmit }) => {
-  const { register, handleSubmit, reset, control } = useForm();
+  const { register, handleSubmit, reset, control, setValue } = useForm();
   return (
+    <FormProvider setValue={setValue}>
     <form onSubmit={handleSubmit(handleFilterSubmit)}>
       <Row className="m-2">
         {filterFields.map((filter) => (
@@ -21,18 +23,11 @@ const FilterBuilder = ({ filterFields, handleFilterSubmit }) => {
               />
             )}
             {filter.type === 'select' && (
-              <Controller
+              <SelectWithFilter
                 name={filter.field}
+                label={`Filter by ${filter.label}`}
+                options={filter?.options}
                 control={control}
-                render={({ field }) => (
-                  <TextField {...field} select label={filter.label} fullWidth variant="outlined">
-                    {filter?.options?.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.name}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
               />
             )}
           </Col>
@@ -55,6 +50,7 @@ const FilterBuilder = ({ filterFields, handleFilterSubmit }) => {
         </Button>
       </div>
     </form>
+    </FormProvider>
   );
 };
 

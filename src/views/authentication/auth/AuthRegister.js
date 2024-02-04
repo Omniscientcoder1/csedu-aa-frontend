@@ -3,9 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Button } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { FormBuilder, Input, Select } from 'src/components/forms/FormBuilder';
+import { FormBuilder, Input, Select, SelectWithFilter } from 'src/components/forms/FormBuilder';
 import { register } from 'src/services/query/user';
 import { toast } from 'react-toastify';
+
+const generateBatchOptions = () => {
+  const options = [];
+
+  // Loop for BSc batches
+  for (let i = 1; i <= 30; i++) {
+    options.push({ name: `BSc - ${i.toString().padStart(2, '0')}`, value: `BSc - ${i.toString().padStart(2, '0')}` });
+  }
+
+  // Loop for MSc batches
+  for (let i = 1; i <= 30; i++) {
+    options.push({ name: `MSc - ${i.toString().padStart(2, '0')}`, value: `MSc - ${i.toString().padStart(2, '0')}` });
+  }
+  
+  options.push({ name: `PHD`, value: `PHD` });
+
+  return options;
+};
 
 const AuthRegister = ({ title, subtitle, subtext }) => {
   const [hasCode, setHasCode] = React.useState(false);
@@ -84,13 +102,14 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
                   class_name="col-12"
                   label={'Password'}
                 />
-                <Input
+                <SelectWithFilter
                   name="batch_number"
-                  register={register}
+                  control={control}
                   errors={errors}
                   required={true}
                   class_name="col-12"
                   label={'Batch'}
+                  options={generateBatchOptions()}
                 />
                 <Select
                   name="sex"

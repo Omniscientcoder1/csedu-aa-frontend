@@ -15,10 +15,28 @@ const columns = [
   { id: 'location', label: 'Location' },
 ];
 
+const generateBatchOptions = () => {
+  const options = [];
+
+  // Loop for BSc batches
+  for (let i = 1; i <= 30; i++) {
+    options.push({ name: `BSc - ${i.toString().padStart(2, '0')}`, value: `BSc - ${i.toString().padStart(2, '0')}` });
+  }
+
+  // Loop for MSc batches
+  for (let i = 1; i <= 30; i++) {
+    options.push({ name: `MSc - ${i.toString().padStart(2, '0')}`, value: `MSc - ${i.toString().padStart(2, '0')}` });
+  }
+  
+  options.push({ name: `PHD`, value: `PHD` });
+
+  return options;
+};
+
 const filterFields = [
   { label: 'Name', field: 'name', type: 'string' },
   { label: 'Username', field: 'username', type: 'string' },
-  { label: 'Batch', field: 'batch', type: 'string' },
+  { label: 'Batch', field: 'batch', type: 'select', options: generateBatchOptions() },
   { label: 'Company', field: 'company', type: 'string' },
   { label: 'Hometown', field: 'hometown', type: 'string' },
   { label: 'Country', field: 'country', type: 'string' },

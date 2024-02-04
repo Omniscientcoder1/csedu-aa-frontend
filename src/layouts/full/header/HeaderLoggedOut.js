@@ -66,6 +66,9 @@ const HeaderLoggedOut = (props) => {
         <Button color="inherit" component={Link} to="/auth/login">
           Log In
         </Button>
+        <Button color="inherit" component={Link} to="/auth/register">
+          Register
+        </Button>
         </Stack>
       </ToolbarStyled>
     </AppBarStyled>

@@ -28,6 +28,36 @@ const generateBatchOptions = () => {
 const AuthRegister = ({ title, subtitle, subtext }) => {
   const [hasCode, setHasCode] = React.useState(false);
   const navigate = useNavigate();
+
+  const validate = (value) => {
+    // Regular expressions for each criteria
+    const minLengthRegex = /.{12,}/;
+    const lowercaseRegex = /[a-z]/;
+    const uppercaseRegex = /[A-Z]/;
+    const numberRegex = /[0-9]/;
+    const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+  
+    // Check each criteria and return appropriate error message if not met
+    if (!minLengthRegex.test(value)) {
+      return false || 'Password must be at least 12 characters long';
+    }
+    if (!lowercaseRegex.test(value)) {
+      return false || 'Password must contain at least one lowercase letter';
+    }
+    if (!uppercaseRegex.test(value)) {
+      return false || 'Password must contain at least one uppercase letter';
+    }
+    if (!numberRegex.test(value)) {
+      return false || 'Password must contain at least one number';
+    }
+    if (!specialCharRegex.test(value)) {
+      return false || 'Password must contain at least one special character';
+    }
+  
+    // If all criteria are met, return null (no error)
+    return true;
+  };
+  
  
   const handleSubmit = async (data) => {
         try {
@@ -99,6 +129,7 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
                   register={register}
                   errors={errors}
                   required={true}
+                  validate={validate}
                   class_name="col-12"
                   label={'Password'}
                 />

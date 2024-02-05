@@ -71,6 +71,12 @@ export const changePassword = async (data) => {
   });
 };
 
+export const resetPassword = async (data) => {
+  return await privateAxios.post(endpoints.RESET_PASS, {
+    ...data,
+  });
+};
+
 export const createSkill = async (data) => {
   return await privateAxios.post(endpoints.CREATE_SKILL, {
     ...data,

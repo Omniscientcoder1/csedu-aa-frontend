@@ -3,7 +3,7 @@ import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { STORAGE_KEY_ACCESS_TOKEN, STORAGE_KEY_REFRESH_TOKEN } from 'src/constants/localstorage';
 import { login, logout } from 'src/services/query/login';
-import { getUserDetails } from 'src/services/query/user';
+import { getUserDetails, resetPassword } from 'src/services/query/user';
 import { privateAxios } from 'src/services/request/axiosConfig';
 import { setTokenInHeader } from 'src/services/request/axiosHelper';
 import { LocalStorage } from 'src/services/storage/localstorage';
@@ -87,6 +87,16 @@ export const AuthContextProvider = ({ children }) => {
     [handleSuccess],
   );
 
+  async function resetAccountPassword(params) {
+    try {
+      const res = await resetPassword(params);
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+
   // const updateProfile = useCallback(
   //   async (data) => {
   //     try {
@@ -113,6 +123,7 @@ export const AuthContextProvider = ({ children }) => {
         fetchUser,
         getToken,
         loginToAccount,
+        resetAccountPassword,
         // updateProfile,
         logoutUser,
         onLogin: handleSuccess,

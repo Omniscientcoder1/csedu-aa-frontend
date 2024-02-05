@@ -47,18 +47,33 @@ const Login2 = () => {
                   </Typography>
                 }
                 subtitle={
-                  <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
-                    <Typography
-                      component={Link}
-                      to="/auth/register"
-                      fontWeight="500"
-                      sx={{
-                        textDecoration: 'none',
-                        color: 'primary.main',
-                      }}
-                    >
-                      Create an account
-                    </Typography>
+                  <Stack direction="column">
+                    <Stack direction="row" justifyContent="center">
+                      <Typography
+                        component={Link}
+                        to="/auth/forgot-password"
+                        fontWeight="500"
+                        sx={{
+                          textDecoration: 'none',
+                          color: 'primary.main',
+                        }}
+                      >
+                        Forgot your password?
+                      </Typography>
+                    </Stack>
+                    <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
+                      <Typography
+                        component={Link}
+                        to="/auth/register"
+                        fontWeight="500"
+                        sx={{
+                          textDecoration: 'none',
+                          color: 'primary.main',
+                        }}
+                      >
+                        Create an account
+                      </Typography>
+                    </Stack>
                   </Stack>
                 }
               />

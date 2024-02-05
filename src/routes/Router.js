@@ -16,6 +16,7 @@ import StudentDetails from 'src/views/user/students/StudentDetails';
 import HallOfFame from 'src/views/admin/hall-of-fame/HallOfFame';
 import PendingRegistrations from 'src/views/admin/pending-registrations/PendingRegistrations';
 import UnAuthGuard from 'src/components/container/UnAuthGuard';
+import ForgotPassword from 'src/views/authentication/ForgotPassword';
 
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
@@ -209,6 +210,11 @@ const Router = [
         <Login />
       </UnAuthGuard>
       ) },
+      { path: '/auth/forgot-password', element: (
+        <UnAuthGuard>
+          <ForgotPassword />
+        </UnAuthGuard>
+        ) },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },

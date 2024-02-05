@@ -5,6 +5,7 @@ const endpoints = {
   USER: 'accounts/user/',
   CHANGE_PASS: 'accounts/change-password/',
   RESET_PASS: 'accounts/reset-password/',
+  RESET_PASS_CONFIRM: 'accounts/reset-password/confirm/',
   USERS: 'accounts/users/',
   PENDING_USERS: 'accounts/pending-users/',
   PROFILES: 'accounts/profiles/',

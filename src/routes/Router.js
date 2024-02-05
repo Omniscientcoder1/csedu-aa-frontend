@@ -17,6 +17,8 @@ import HallOfFame from 'src/views/admin/hall-of-fame/HallOfFame';
 import PendingRegistrations from 'src/views/admin/pending-registrations/PendingRegistrations';
 import UnAuthGuard from 'src/components/container/UnAuthGuard';
 import ForgotPassword from 'src/views/authentication/ForgotPassword';
+import ResetPassword from 'src/views/authentication/ResetPassword';
+
 
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
@@ -213,6 +215,11 @@ const Router = [
       { path: '/auth/forgot-password', element: (
         <UnAuthGuard>
           <ForgotPassword />
+        </UnAuthGuard>
+        ) },
+      { path: '/auth/reset-password', element: (
+        <UnAuthGuard>
+          <ResetPassword />
         </UnAuthGuard>
         ) },
       { path: '*', element: <Navigate to="/auth/404" /> },

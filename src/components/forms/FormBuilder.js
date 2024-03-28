@@ -331,13 +331,16 @@ export function SelectWithFilter({
   control,
 }) {
   const { setValue } = useFormContext();
+  const [inputValue, setInputValue] = useState(defaultValue); // Separate state for input value
   const [filteredOptions, setFilteredOptions] = useState(options);
 
   useEffect(() => {
     setValue(name, defaultValue);
+    setInputValue(defaultValue); // Set input value on initialization
   }, [defaultValue]);
 
   const handleInputChange = (event, value) => {
+    setInputValue(value); // Update input value
     if (!value) {
       setFilteredOptions(options);
       return;
@@ -362,13 +365,14 @@ export function SelectWithFilter({
             onChange={(event, value) => {
               setValue(name, value ? value.value : '');
             }}
-            inputValue={field.value}
+            inputValue={inputValue} // Use inputValue state for input value
             onInputChange={handleInputChange}
             renderInput={(params) => (
               <TextField {...params} label={label} variant="outlined" />
             )}
             getOptionLabel={(option) => option.name}
             getOptionSelected={(option, value) => option.value === value.value}
+            value={options.find(option => option.value === defaultValue)}
           />
         )}
       />
@@ -376,6 +380,7 @@ export function SelectWithFilter({
     </div>
   );
 }
+
 
 export function RichTextEditor({
   name,

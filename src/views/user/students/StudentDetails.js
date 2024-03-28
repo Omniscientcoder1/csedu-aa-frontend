@@ -69,7 +69,7 @@ function StudentDetails() {
   return (
     <Container className={classes.root}>
       <Loader isLoading={loading}>
-        <h3 className="mt-3">Basic Informations</h3>
+        <h3 className="mt-3">Basic Information</h3>
         <Row>
           <div className="d-flex flex-column align-items-center">
             <Avatar

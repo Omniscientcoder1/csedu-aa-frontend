@@ -9,6 +9,7 @@ const endpoints = {
   USERS: 'accounts/users/',
   PENDING_USERS: 'accounts/pending-users/',
   PROFILES: 'accounts/profiles/',
+  BASIC_PROFILE: 'accounts/basic-profile/',
   REGISTER: 'accounts/create/users/',
   REFERRALS: 'accounts/referrals/create/',
   CREATE_SKILL: 'accounts/profile/create/skills/',

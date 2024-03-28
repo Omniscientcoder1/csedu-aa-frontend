@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    padding: 20,
+    padding: '20px 20px 35px 20px',
     backgroundColor: 'rgba(0,0,0,0.5)',
     color: '#fff',
     width: '100%',

@@ -18,6 +18,7 @@ import PendingRegistrations from 'src/views/admin/pending-registrations/PendingR
 import UnAuthGuard from 'src/components/container/UnAuthGuard';
 import ForgotPassword from 'src/views/authentication/ForgotPassword';
 import ResetPassword from 'src/views/authentication/ResetPassword';
+import Payments from 'src/views/user/payments/Payments';
 
 
 /* ***Layouts**** */
@@ -101,6 +102,15 @@ const Router = [
         element: (
           <AuthGuard>
             <Emails />
+          </AuthGuard>
+        ),
+      },
+      {
+        path: '/payments',
+        exact: true,
+        element: (
+          <AuthGuard>
+            <Payments />
           </AuthGuard>
         ),
       },

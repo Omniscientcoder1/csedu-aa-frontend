@@ -4,18 +4,37 @@ import { useContext, useEffect, useState } from 'react';
 // ** MUI Imports
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import { DateInput, FileInput, FormBuilder, Input, Select } from '../forms/FormBuilder';
+import { DateInput, FileInput, FormBuilder, Input, Select, SelectWithFilter } from '../forms/FormBuilder';
 import { AuthContext } from 'src/context/AuthContext';
 import { updateUserProfile } from 'src/services/query/user';
 import { toast } from 'react-toastify';
 import { Avatar, TextField } from '@mui/material';
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import { uploadImage } from 'src/services/query/image';
+
 const TabAccount = () => {
   // ** State
   const [profile, setProfile] = useState(null);
 
   const { userData } = useContext(AuthContext);
+
+  const generateBatchOptions = () => {
+    const options = [];
+  
+    // Loop for BSc batches
+    for (let i = 1; i <= 30; i++) {
+      options.push({ name: `BSc - ${i.toString().padStart(2, '0')}`, value: `BSc - ${i.toString().padStart(2, '0')}` });
+    }
+  
+    // Loop for MSc batches
+    for (let i = 1; i <= 30; i++) {
+      options.push({ name: `MSc - ${i.toString().padStart(2, '0')}`, value: `MSc - ${i.toString().padStart(2, '0')}` });
+    }
+    
+    options.push({ name: `PHD`, value: `PHD` });
+  
+    return options;
+  };
 
   useEffect(() => {
     setProfile({
@@ -58,7 +77,7 @@ const TabAccount = () => {
         {(register, errors, { control }) => {
           return (
             <>
-              <h3>Basic Informations</h3>
+              <h3>Basic Information</h3>
               <div className="d-flex flex-column align-items-center">
                 <Avatar
                   src={userData?.profile_picture || ProfileImg}
@@ -99,14 +118,16 @@ const TabAccount = () => {
                 />
               </div>
               <div className="row mt-3">
-                <Input
+                <SelectWithFilter
                   defaultValue={userData?.batch_number}
                   name="batch_number"
+                  control={control}
                   errors={errors}
                   required={true}
                   register={register}
                   class_name="col-6"
                   label={'Batch Number'}
+                  options={generateBatchOptions()}
                 />
                 <Input
                   defaultValue={userData?.hometown}

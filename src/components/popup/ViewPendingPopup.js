@@ -34,7 +34,7 @@ import {
         handleClose();
       };
 
-    const textFieldStyle = { width: '300px' }; 
+    const textFieldStyle = { width: '400px' }; 
 
     return (
         <>
@@ -46,7 +46,7 @@ import {
                 onClose={handleClose} 
                 PaperProps={{
                     style: {
-                      maxWidth: '350px',
+                      maxWidth: '450px',
                       marginLeft: 'auto',
                       marginRight: 'auto'
                     }
@@ -116,7 +116,7 @@ import {
                     <TextField
                     margin="dense"
                     label="Batch Number"
-                    type="number"
+                    type="text"
                     variant="filled"
                     InputProps={{
                         readOnly: true,

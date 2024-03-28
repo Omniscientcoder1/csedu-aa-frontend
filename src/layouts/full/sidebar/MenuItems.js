@@ -4,7 +4,8 @@ import {
   CalendarToday,
   EmailOutlined,
   Event,
-  PendingActions
+  PendingActions,
+  Payment
 } from '@mui/icons-material';
 import { IconWriting } from '@tabler/icons';
 
@@ -69,6 +70,13 @@ const Menuitems = [
     title: 'Emails',
     icon: AlternateEmailSharp,
     href: '/emails-list',
+    admin: false,
+  },
+  {
+    id: uniqueId(),
+    title: 'Payments',
+    icon: Payment,
+    href: '/payments',
     admin: false,
   },
   {

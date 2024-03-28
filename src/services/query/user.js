@@ -10,6 +10,15 @@ export const getUserDetails = async () => {
   }
 };
 
+export const getUserProfile = async () => {
+  try {
+    const response = await privateAxios.get(`${endpoints.BASIC_PROFILE}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getUsers = async (data) => {
   try {
     const response = await privateAxios.get(`${endpoints.USERS}`, { params: data });

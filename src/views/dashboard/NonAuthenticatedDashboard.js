@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    padding: 20,
+    padding: '20px 20px 35px 20px',
     backgroundColor: 'rgba(0,0,0,0.5)',
     color: '#fff',
     width: '100%',
@@ -41,9 +41,6 @@ const useStyles = makeStyles((theme) => ({
   },
   centeredDivider: {
     width: '25%', 
-    margin: '0 auto', // Center the divider
-    backgroundColor: '#000',
-    height: 4,
   }
 }));
 
@@ -162,10 +159,17 @@ const NonAuthenticatedDashboard = ({ title, caption, images }) => {
 
 
       <div className={classes.root}>
-        <Typography variant="h3" className={classes.committeeHeader}>
-          Current Committee
-        </Typography>
-
+        <Grid container>
+          <Grid item xs={12} className={classes.committeeHeader}>
+            <Typography variant="h3">Current Committee</Typography>
+            <Divider sx={{
+            height: 4,
+            backgroundColor: '#000',
+            margin: '16px auto',
+          }}
+          className={classes.centeredDivider} />
+          </Grid>
+        </Grid>
         <CommitteeSlider committee={committee} />
       </div>
 

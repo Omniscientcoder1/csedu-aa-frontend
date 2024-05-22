@@ -1,22 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from 'styled-components';
 
 const CommitteeSlider = ({ committee }) => {
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    
-  };
+  const [currentSettings, setCurrentSettings] = useState(getSliderSettings(window.innerWidth));
+
+  useEffect(() => {
+    const handleResize = () => {
+      setCurrentSettings(getSliderSettings(window.innerWidth));
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  function getSliderSettings(width) {
+    if (width < 576) {
+      return {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        initialSlide: 0,
+      };
+    } else if (width >= 576 && width < 992) {
+      return {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        arrows: false,
+        initialSlide: 0,
+      };
+    } else {
+      return {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        arrows: false,
+        initialSlide: 0,
+      };
+    }
+  }
 
   return (
     <SliderContainer>
-      <Slider {...settings}>
+      <Slider {...currentSettings}>
         {committee.map((member) => (
           <CardContainer key={member.name}>
             <StyledCommitteeCard>
@@ -35,6 +71,8 @@ const CommitteeSlider = ({ committee }) => {
 
 const SliderContainer = styled.div`
   padding: 20px; 
+  max-width: 1200px;
+  max-width: min(1200px, calc(100vw - 40px));
 `;
 
 const CardContainer = styled.div`

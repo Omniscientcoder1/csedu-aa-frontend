@@ -41,9 +41,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '30px',
   },
   centeredDivider: {
-    width: '25%', 
-    margin: 'auto', 
-    marginTop: '30px',
+    width: '25%'
   }
 }));
 
@@ -170,7 +168,7 @@ const Dashboard = ({ title, caption, images }) => {
             <Divider sx={{
             height: 4,
             backgroundColor: '#000', // change color as needed
-            margin: '16px 0', // adjust margin as needed
+            margin: '16px auto', // adjust margin as needed
           }}
           className={classes.centeredDivider} />
           </Grid>
@@ -178,8 +176,6 @@ const Dashboard = ({ title, caption, images }) => {
         <CommitteeSlider committee={committee} />
       </div>
       
-      
-
     </div>
   );
 };

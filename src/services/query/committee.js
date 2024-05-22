@@ -1,37 +1,44 @@
 import endpoints from 'src/constants/endpoints';
 import { axios, privateAxios } from '../request/axiosConfig';
-import ProfileImage from 'src/assets/images/profile/user-1.jpg'
+import ProfileImage from 'src/assets/images/profile/user-2.jpg'
 
 export const getCommittee = async (data) => {
-  try {
-    //const response = await axios.get(`${endpoints.CARDS}`, { params: data });
-    //return response.data;
-    
+  try {    
     const data = [
         {
-          name: `Alex Johnson`,
+          name: `Professor Dr. Md. Rezaul Karim`,
           img: ProfileImage,
-          post: `President`
+          post: `Convener`
         },
         {
-          name: `Samantha Brown`,
+          name: `Md. Ashfaque Iftekhar Khan`,
           img: ProfileImage,
-          post: `Vice President`
+          post: `Member`
         },
         {
-          name: `Michael Green`,
+          name: `Professor Dr. Lafifa Jamal`,
           img: ProfileImage,
-          post: `Secretary`
+          post: `Member`
         },
         {
-          name: `Emma Wilson`,
+          name: `Mohammad Miraj Uddin Khan`,
           img: ProfileImage,
-          post: `Treasurer`
+          post: `Member`
         },
         {
-          name: `Daniel Smith`,
+          name: `Md. Faisal Hossain`,
           img: ProfileImage,
-          post: `Event Coordinator`
+          post: `Member`
+        },
+        {
+          name: `Sharmin Akter`,
+          img: ProfileImage,
+          post: `Member`
+        },
+        {
+          name: `Md. Mahir Ashhab`,
+          img: ProfileImage,
+          post: `Member`
         },
       ];
 

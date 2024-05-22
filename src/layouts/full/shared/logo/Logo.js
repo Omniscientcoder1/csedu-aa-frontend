@@ -13,7 +13,7 @@ const Logo = () => {
   return (
     <div className="d-flex justify-content-center align-items-center">
       <Link to="/">
-        <img src={logo} style={{ width: 70, margin: "0px 10px 0px 0px"}} />
+        <img src={logo} style={{ width: 70, margin: "10px 10px 10px 0px"}} />
       </Link>
       <div>
         <h3 className="mb-0 mt-1">CSEDU</h3>

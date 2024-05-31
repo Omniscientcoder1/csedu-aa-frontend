@@ -40,6 +40,13 @@ const Menuitems = [
   },
   {
     id: uniqueId(),
+    title: 'Membership Claims',
+    icon: PendingActions,
+    href: '/membership-claims',
+    admin: true,
+  },
+  {
+    id: uniqueId(),
     title: 'Events Management',
     icon: Event,
     href: '/events-management',

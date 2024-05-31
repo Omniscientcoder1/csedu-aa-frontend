@@ -43,6 +43,27 @@ export const acceptOrDeclineUser = async (username, accept) => {
   });
 };
 
+export const getMembershipClaims = async (data) => {
+  try {
+    const response = await privateAxios.get(`${endpoints.MEMBERSHIP_CLAIMS}`, { params: data });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const acceptOrDeclineMembership = async (id, accept) => {
+  return await privateAxios.post(`/accounts/membership-claim/${id}/`, {
+    accept: accept,
+  });
+};
+
+export const createMembershipClaim = async (data) => {
+  return await privateAxios.post(endpoints.CREATE_MEMBERSHIP_CLAIM, {
+    ...data,
+  });
+};
+
 export const getUserDetailByUsername = async (username) => {
   try {
     const response = await privateAxios.get(`${endpoints.PROFILES}${username}/`);

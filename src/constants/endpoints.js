@@ -8,6 +8,8 @@ const endpoints = {
   RESET_PASS_CONFIRM: 'accounts/reset-password/confirm/',
   USERS: 'accounts/users/',
   PENDING_USERS: 'accounts/pending-users/',
+  MEMBERSHIP_CLAIMS: 'accounts/membership-claims/',
+  CREATE_MEMBERSHIP_CLAIM: 'accounts/membership-claim/',
   PROFILES: 'accounts/profiles/',
   BASIC_PROFILE: 'accounts/basic-profile/',
   REGISTER: 'accounts/create/users/',

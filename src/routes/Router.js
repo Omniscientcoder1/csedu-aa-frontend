@@ -15,6 +15,7 @@ import EventsDetails from 'src/views/user/events/EventDetails';
 import StudentDetails from 'src/views/user/students/StudentDetails';
 import HallOfFame from 'src/views/admin/hall-of-fame/HallOfFame';
 import PendingRegistrations from 'src/views/admin/pending-registrations/PendingRegistrations';
+import MembershipClaims from 'src/views/admin/membership-claims/MembershipClaims';
 import UnAuthGuard from 'src/components/container/UnAuthGuard';
 import ForgotPassword from 'src/views/authentication/ForgotPassword';
 import ResetPassword from 'src/views/authentication/ResetPassword';
@@ -93,6 +94,15 @@ const Router = [
         element: (
           <AuthGuard>
             <PendingRegistrations />
+          </AuthGuard>
+        ),
+      },
+      {
+        path: '/membership-claims',
+        exact: true,
+        element: (
+          <AuthGuard>
+            <MembershipClaims />
           </AuthGuard>
         ),
       },

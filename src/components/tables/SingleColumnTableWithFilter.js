@@ -46,6 +46,7 @@ const useStyles = makeStyles({
     margin: '10px',
     padding: '1rem',
   },
+  
 });
 
 const SingleColumnTableWithFilter = ({ columns, fetchData, filterFields }) => {
@@ -122,11 +123,19 @@ const SingleColumnTableWithFilter = ({ columns, fetchData, filterFields }) => {
                                 }}
                               />
                               <div style={{ marginLeft: 12 }}>
+                                <div className="d-flex align-items-center">
                                 <Typography variant="h5" component="h2">
                                   {row.first_name
                                     ? row.first_name + ' ' + row.last_name
                                     : 'Unnamed'}
                                 </Typography>
+                                <div style={{ height: '100%', width: '15px' }}></div>
+                                {row.membership !== 'None' && (
+                                  <div style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '5px 10px', textAlign: 'center', backgroundColor: '#f0f0f0' }}>
+                                    {row.membership + ' Member'}
+                                  </div>
+                                )}
+                                </div>
                                 <Typography color="textSecondary">{row.email_address}</Typography>
                                 <Typography variant="body2" component="p">
                                   From {row.batch_number ?? 'Unknown'} Batch

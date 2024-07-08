@@ -42,8 +42,10 @@ export const AuthContextProvider = ({ children }) => {
 
   const fetchUser = useCallback(async () => {
     try {
-      const data = await getUserDetails();
-      setUserData(data);
+      const userData = await getUserDetails();
+      const profileData = await getUserProfile();
+      const mergedObject = { ...userData, ...profileData };
+      setUserData(mergedObject);
     } catch (error) {
     } finally {
       setIsFetchingUserData(false);

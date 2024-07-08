@@ -23,6 +23,7 @@ const HallOfFame = () => {
       const imageUrl = await uploadImage(data.photo?.[0]);
       const res = await createCard({ ...data, photo: imageUrl });
       setOpen(false);
+      setForceReload((state) => !state);
       toast.success(`Created.`);
     } catch (error) {
       toast.error('Error!');

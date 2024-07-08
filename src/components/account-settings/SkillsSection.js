@@ -52,7 +52,7 @@ const SkillsSection = ({ setLoading }) => {
           setOpen={setOpenSkill}
           buttonTitle="+ New Skill"
           heading="Add New Skill"
-          maxWidth="lg"
+          maxWidth="sm"
         >
           <FormBuilder onSubmit={handleSkillSubmit}>
             {(register, errors, { control, setValue }) => {
@@ -92,9 +92,14 @@ const SkillsSection = ({ setLoading }) => {
                     label={'Description'}
                   />
 
-                  <Button className="text-right" type="submit" variant="contained" color="primary">
-                    Submit
-                  </Button>
+                  <div className="d-flex justify-content-center">
+                    <Button className="me-5" type="submit" variant="contained" color="primary">
+                      Submit
+                    </Button>
+                    <Button onClick={() => setOpenSkill(false)} variant="contained" color="error">
+                      Close
+                    </Button>
+                  </div>
                 </>
               );
             }}
@@ -127,7 +132,7 @@ const SkillsSection = ({ setLoading }) => {
                 />
               </div>
             </div>
-            <div className="d-flex">
+            <div className="d-flex flex-column ps-3">
               <Button
                 onClick={() => {
                   setSkill(skill);
@@ -135,13 +140,13 @@ const SkillsSection = ({ setLoading }) => {
                 }}
                 color="success"
                 variant="outlined"
-                className="m-2"
+                className="mt-2 w-100"
               >
                 Edit
               </Button>
               <Button
                 color="error"
-                className="mt-2 mb-2"
+                className="mt-3 w-100"
                 variant="contained"
                 onClick={() => handleDelete(skill.id)}
               >

@@ -41,7 +41,7 @@ const HeaderLoggedOut = (props) => {
         >
           <IconMenu width="20" height="20" />
         </IconButton> */}
-        <Logo />
+        <Logo authenticated={false}/>
 
 
         {/* <IconButton

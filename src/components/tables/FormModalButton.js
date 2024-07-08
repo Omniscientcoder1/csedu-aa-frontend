@@ -26,9 +26,9 @@ export default function FormModalButton({
       <Button variant="contained" onClick={handleClickOpen}>
         {buttonTitle}
       </Button>
-      <Dialog open={open} onClose={handleClose} maxWidth={'lg'}>
+      <Dialog open={open} onClose={handleClose} maxWidth={maxWidth} fullWidth>
         <DialogTitle>{heading}</DialogTitle>
-        <DialogContent>{children}</DialogContent>
+        <DialogContent className="pb-0">{children}</DialogContent>
       </Dialog>
     </div>
   );

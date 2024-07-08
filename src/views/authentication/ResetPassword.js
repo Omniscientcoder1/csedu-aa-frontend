@@ -38,7 +38,7 @@ const ResetPassword = () => {
 
       const res = await resetAccountPasswordConfirm(requestData);
       console.log(res);
-      toast.success(`Successfully sent password reset email.`);
+      toast.success(`Successfully reset your password.`);
       navigate('/auth/login');
     } catch (error) {
       const statusCode = error.response?.status;

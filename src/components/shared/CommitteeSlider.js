@@ -71,8 +71,12 @@ const CommitteeSlider = ({ committee }) => {
 
 const SliderContainer = styled.div`
   padding: 20px; 
-  max-width: 1200px;
+  // max-width: 1200px;
   max-width: min(1200px, calc(100vw - 40px));
+
+  @media (min-width: 1200px) {
+    max-width: calc(100vw - 309px);
+  }
 `;
 
 const CardContainer = styled.div`

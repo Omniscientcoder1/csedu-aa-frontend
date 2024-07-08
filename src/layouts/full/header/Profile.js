@@ -15,18 +15,15 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField,
-  Select,
-  MenuItem as DropdownItem,
-  FormControl,
-  InputLabel,
-  FormHelperText,
 } from '@mui/material';
 
 import { IconUser } from '@tabler/icons';
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import { AuthContext } from 'src/context/AuthContext';
 import { createMembershipClaim } from 'src/services/query/user';
+
+// Import FormBuilder and input components
+import { FormBuilder, Input, Select, FileInput } from 'src/components/forms/FormBuilder';
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -63,12 +60,12 @@ const Profile = () => {
     setOpenDialog(false);
   };
 
-  const handleConfirm = () => {
-    if (validateForm()) {
+  const handleConfirm = (data) => {
+    if (validateForm(data)) {
       createMembershipClaim({
-        'category': category,
-        'amount_paid': parseInt(amount),
-        'date_of_registration': new Date(date).toISOString(),
+        category: data.category,
+        amount_paid: parseInt(data.amount),
+        date_of_registration: new Date(data.date).toISOString(),
       });
       setOpenDialog(false);
     }
@@ -84,9 +81,9 @@ const Profile = () => {
     setAmount(value);
   };
 
-  const validateForm = () => {
+  const validateForm = (data) => {
     let valid = true;
-    if (isNaN(amount) || amount <= 0) {
+    if (isNaN(data.amount) || data.amount <= 0) {
       setAmountError('Please enter a valid positive number');
       valid = false;
     } else {
@@ -135,7 +132,8 @@ const Profile = () => {
       >
         <MenuItem
           onClick={() => {
-            navigate('/accounts-management');
+            setAnchorEl2(null);
+            navigate('/profile');
           }}
         >
           <ListItemIcon>
@@ -143,70 +141,95 @@ const Profile = () => {
           </ListItemIcon>
           <ListItemText>My Profile</ListItemText>
         </MenuItem>
+        {!userData?.is_pending &&
+          (userData?.membership === 'None' ? (
+            <Box mt={1} pt={1} px={2}>
+              <Button
+                onClick={handleMembership}
+                variant="outlined"
+                color="primary"
+                component={Link}
+                fullWidth
+              >
+                Already a Member?
+              </Button>
+            </Box>
+          ) : (
+            <Box
+              my={1}
+              mx={2}
+              py={1}
+              style={{
+                border: '1px solid #ccc',
+                borderRadius: '5px',
+                textAlign: 'center',
+                backgroundColor: '#f0f0f0',
+              }}
+            >
+              {userData?.membership + ' Member'}
+            </Box>
+          ))}
         <Box mt={1} py={1} px={2}>
-          <Button
-            onClick={handleMembership}
-            variant="outlined"
-            color="primary"
-            component={Link}
-            fullWidth
-          >
-            Already a Member?
-          </Button>
-        </Box>
-        <Box mt={1} px={2}>
-          <Button
-            onClick={handleLogout}
-            variant="outlined"
-            color="primary"
-            fullWidth
-          >
+          <Button onClick={handleLogout} variant="outlined" color="primary" fullWidth>
             Logout
           </Button>
         </Box>
       </Menu>
 
-      <Dialog open={openDialog} onClose={handleDialogClose}>
+      <Dialog open={openDialog} onClose={handleDialogClose} maxWidth="sm" fullWidth>
         <DialogTitle>Membership Information</DialogTitle>
-        <DialogContent>
-        <FormControl fullWidth margin="normal">
-            <InputLabel shrink>Category</InputLabel>
-            <Select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              label="Category"
-            >
-              <MenuItem value="General">General</MenuItem>
-              <MenuItem value="Lifetime">Lifetime</MenuItem>
-            </Select>
-          </FormControl>
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Amount Paid"
-            value={amount}
-            onChange={handleAmountChange}
-            error={!!amountError}
-            helperText={amountError}
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Date of Registration"
-            type="date"
-            InputLabelProps={{ shrink: true }}
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
+        <DialogContent style={{ paddingTop: 16, paddingBottom: 0 }}>
+          <FormBuilder onSubmit={handleConfirm} defaultValues={{ category, amount, date }} pb="pb-2">
+            {(register, errors, { control }) => (
+              <>
+                <Select
+                  name="category"
+                  label="Category"
+                  defaultValue={category}
+                  control={control}
+                  errors={errors}
+                  options={[
+                    { name: 'General', value: 'General' },
+                    { name: 'Lifetime', value: 'Lifetime' },
+                  ]}
+                />
+                <Input
+                  name="amount"
+                  label="Amount Paid"
+                  defaultValue={amount}
+                  errors={errors}
+                  register={register}
+                  onChange={handleAmountChange}
+                  error={!!amountError}
+                  helperText={amountError}
+                />
+                <Input
+                  name="date"
+                  label="Date of Registration"
+                  type="date"
+                  defaultValue={date}
+                  errors={errors}
+                  register={register}
+                  InputLabelProps={{ shrink: true }}
+                />
+                <FileInput
+                  name="record"
+                  errors={errors}
+                  register={register}
+                  label={'Record of Payment'}
+                />
+                <DialogActions>
+                  <Button onClick={handleDialogClose} color="secondary">
+                    Cancel
+                  </Button>
+                  <Button type="submit" color="primary">
+                    Confirm
+                  </Button>
+                </DialogActions>
+              </>
+            )}
+          </FormBuilder>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDialogClose} color="secondary">
-            Cancel
-          </Button>
-          <Button onClick={handleConfirm} color="primary">
-            Confirm
-          </Button>
-        </DialogActions>
       </Dialog>
     </Box>
   );

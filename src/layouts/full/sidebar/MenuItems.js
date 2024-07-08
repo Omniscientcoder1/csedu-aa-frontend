@@ -16,6 +16,7 @@ const Menuitems = [
     navlabel: true,
     subheader: 'Admin Panel',
     admin: true,
+    verified: true,
   },
   {
     id: uniqueId(),
@@ -23,6 +24,7 @@ const Menuitems = [
     icon: AccountCircleOutlined,
     href: '/users-management',
     admin: true,
+    verified: true,
   },
   {
     id: uniqueId(),
@@ -30,6 +32,7 @@ const Menuitems = [
     icon: EmailOutlined,
     href: '/emails-management',
     admin: true,
+    verified: true,
   },
   {
     id: uniqueId(),
@@ -37,6 +40,7 @@ const Menuitems = [
     icon: PendingActions,
     href: '/pending-registrations',
     admin: true,
+    verified: true,
   },
   {
     id: uniqueId(),
@@ -44,6 +48,7 @@ const Menuitems = [
     icon: PendingActions,
     href: '/membership-claims',
     admin: true,
+    verified: true,
   },
   {
     id: uniqueId(),
@@ -51,6 +56,7 @@ const Menuitems = [
     icon: Event,
     href: '/events-management',
     admin: true,
+    verified: true,
   },
   {
     id: uniqueId(),
@@ -58,6 +64,7 @@ const Menuitems = [
     icon: AccountCircleOutlined,
     href: '/hall-of-fame',
     admin: true,
+    verified: true,
   },
   {
     navlabel: true,
@@ -67,10 +74,11 @@ const Menuitems = [
 
   {
     id: uniqueId(),
-    title: 'Students',
+    title: 'Alumni',
     icon: AccountCircleOutlined,
-    href: '/students-list',
+    href: '/alumni-list',
     admin: false,
+    verified: false,
   },
   {
     id: uniqueId(),
@@ -78,6 +86,7 @@ const Menuitems = [
     icon: AlternateEmailSharp,
     href: '/emails-list',
     admin: false,
+    verified: true,
   },
   {
     id: uniqueId(),
@@ -85,6 +94,7 @@ const Menuitems = [
     icon: Payment,
     href: '/payments',
     admin: false,
+    verified: true,
   },
   {
     id: uniqueId(),
@@ -92,6 +102,7 @@ const Menuitems = [
     icon: CalendarToday,
     href: '/events-list',
     admin: false,
+    verified: false,
   },
   {
     id: uniqueId(),
@@ -99,6 +110,7 @@ const Menuitems = [
     icon: IconWriting,
     href: '/blogs-list',
     admin: false,
+    verified: false,
   },
   // {
   //   navlabel: true,

@@ -6,40 +6,115 @@ export const getCommittee = async (data) => {
   try {    
     const data = [
         {
-          name: `Professor Dr. Md. Rezaul Karim`,
+          name: `Kazi Mohammad Mahbubul Hoque`,
           img: ProfileImage,
-          post: `Convener`
+          post: `President`
         },
         {
-          name: `Md. Ashfaque Iftekhar Khan`,
+          name: `Mohammad Abdul Bari`,
           img: ProfileImage,
-          post: `Member`
+          post: `Vice President`
         },
         {
-          name: `Professor Dr. Lafifa Jamal`,
+          name: `Md. Akhtaruzzaman`,
           img: ProfileImage,
-          post: `Member`
-        },
-        {
-          name: `Mohammad Miraj Uddin Khan`,
-          img: ProfileImage,
-          post: `Member`
+          post: `Vice President`
         },
         {
           name: `Md. Faisal Hossain`,
           img: ProfileImage,
-          post: `Member`
+          post: `General Secretary`
         },
         {
-          name: `Sharmin Akter`,
+          name: `Dr. Md. Azam Hossain`,
           img: ProfileImage,
-          post: `Member`
+          post: `Treasurer`
         },
         {
-          name: `Md. Mahir Ashhab`,
+          name: `Jewel Rana`,
           img: ProfileImage,
-          post: `Member`
+          post: `Joint Secretary`
         },
+        {
+          name: `Md. Farhad Alam Bhuiyan`,
+          img: ProfileImage,
+          post: `Organizational Secretary`
+        },
+        {
+          name: `Md. Farhad Alam Bhuiyan`,
+          img: ProfileImage,
+          post: `Organizational Secretary`
+        },
+        {
+          name: `Md. Tahzib Ul Islam`,
+          img: ProfileImage,
+          post: `Departmental Secretary`
+        },
+        {
+          name: `Md. Rubel Pasha`,
+          img: ProfileImage,
+          post: `Cultural Secretary`
+        },
+        {
+          name: `Kazi Safaet Mahmud Auvi`,
+          img: ProfileImage,
+          post: `Publications and Intellectual Secretary`
+        },
+        {
+          name: `Md Abeed Hossain`,
+          img: ProfileImage,
+          post: `Sports Secretary`
+        },
+        {
+          name: `Md. Khairul Bashar`,
+          img: ProfileImage,
+          post: `Public Relations and Communication Secretary`
+        },
+        {
+          name: `Abdullah Ibne Masud`,
+          img: ProfileImage,
+          post: `Branding and Graphic Design Secretary`
+        },
+        {
+          name: `Md. Abu Nader Al Mokaddas`,
+          img: ProfileImage,
+          post: `Executive Member`
+        },
+        {
+          name: `Mohammad Miraj Uddin Khan`,
+          img: ProfileImage,
+          post: `Executive Member`
+        },
+        {
+          name: `Nahid Hasan`,
+          img: ProfileImage,
+          post: `Executive Member`
+        },
+        {
+          name: `Helal Hejazi`,
+          img: ProfileImage,
+          post: `Executive Member`
+        },
+        {
+          name: `Anjum Riashat`,
+          img: ProfileImage,
+          post: `Executive Member`
+        },
+        {
+          name: `Shahrear Bin Amin`,
+          img: ProfileImage,
+          post: `Executive Member`
+        },
+        {
+          name: `Md. Shafiqul Islam`,
+          img: ProfileImage,
+          post: `Executive Member`
+        },
+        {
+          name: `Rahat Hossain`,
+          img: ProfileImage,
+          post: `Executive Member`
+        }
       ];
 
     return data;      

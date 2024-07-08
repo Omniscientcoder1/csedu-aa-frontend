@@ -31,6 +31,7 @@ const Emails = () => {
   const [open, setOpen] = useState(false);
   const [viewOpen, setViewOpen] = useState(false);
   const [selectedMail, setSelectedMail] = useState(null);
+  const [forceReload, setForceReload] = useState(false);
 
   const columns = [
     { id: 'sender', label: 'From', render: (data) => getFullName(data) },
@@ -91,6 +92,7 @@ const Emails = () => {
     try {
       const res = await userSendMail(data);
       setOpen(false);
+      setForceReload((state) => !state);
       toast.success('Mail sent successfully.');
     } catch (error) {
       console.log(error);
@@ -138,6 +140,7 @@ const Emails = () => {
           onSubmit={() => {}}
           open={open}
           setOpen={setOpen}
+          maxWidth='md'
         >
           <FormBuilder onSubmit={handleSubmit}>
             {(register, errors, { control }) => {
@@ -179,9 +182,14 @@ const Emails = () => {
                       name="is_private_mail"
                       label={'Private Mail'}
                     />
-                    <Button variant="outlined" type="submit">
-                      Submit
-                    </Button>
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', width: '100%' }}>
+                      <Button variant="outlined" type="submit" style={{ flexGrow: 1 }}>
+                        Submit
+                      </Button>
+                      <Button variant="outlined" onClick={() => setOpen(false)} color="error" style={{ flexGrow: 1 }}>
+                        Cancel
+                      </Button>
+                    </div>
                   </div>
                 </>
               );
@@ -189,7 +197,7 @@ const Emails = () => {
           </FormBuilder>
         </FormModalButton>
         <CardHeader title="Email Management" titleTypographyProps={{ variant: 'h6' }} />
-        <TableWithFilter columns={columns} filterFields={filterFields} fetchData={getMyMails} />
+        <TableWithFilter columns={columns} filterFields={filterFields} fetchData={getMyMails} forceReload={forceReload}/>
       </Card>
     </div>
   );

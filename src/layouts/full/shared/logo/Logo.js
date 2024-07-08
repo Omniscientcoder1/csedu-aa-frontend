@@ -9,10 +9,10 @@ const LinkStyled = styled(Link)(() => ({
   display: 'block',
 }));
 
-const Logo = () => {
+const Logo = ({ authenticated = true }) => {
   return (
     <div className="d-flex justify-content-center align-items-center">
-      <Link to="/">
+      <Link to={authenticated ? "/" : "/home"}>
         <img src={logo} style={{ width: 70, margin: "10px 10px 10px 0px"}} />
       </Link>
       <div>

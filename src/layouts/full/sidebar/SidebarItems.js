@@ -14,17 +14,29 @@ const SidebarItems = () => {
   return (
     <Box sx={{ px: 3 }}>
       <List sx={{ pt: 0 }} className="sidebarNav">
-        {Menuitems.filter((item) => userData?.is_admin || !item.admin).map((item) => {
-          // {/********SubHeader**********/}
-          if (item.subheader) {
-            return <NavGroup item={item} key={item.subheader} />;
+        {Menuitems
+          .filter((item) => {
+            if (userData?.is_admin) {
+              return true;
+            } else {
+              if (userData?.is_pending) {
+                return !item.verified;
+              } else {
+                return !item.admin;
+              }
+            }
+          })
+          .map((item) => {
+            // {/********SubHeader**********/}
+            if (item.subheader) {
+              return <NavGroup item={item} key={item.subheader} />;
 
-            // {/********If Sub Menu**********/}
-            /* eslint no-else-return: "off" */
-          } else {
-            return <NavItem item={item} key={item.id} pathDirect={pathDirect} />;
-          }
-        })}
+              // {/********If Sub Menu**********/}
+              /* eslint no-else-return: "off" */
+            } else {
+              return <NavItem item={item} key={item.id} pathDirect={pathDirect} />;
+            }
+          })}
       </List>
     </Box>
   );

@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import Loader from 'src/components/container/Loader';
 import {
   FileInput,
@@ -16,6 +16,8 @@ import FormModalButton from 'src/components/tables/FormModalButton';
 import { createBlog, deleteBlog, getBlogs } from 'src/services/query/blogs';
 import { uploadImage } from 'src/services/query/image';
 import { getFullName, getShortDetails } from 'src/views/utilities/utils';
+import { AuthContext } from 'src/context/AuthContext';
+
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState(null);
@@ -23,6 +25,7 @@ const Blogs = () => {
   const [loading, setLoading] = useState(false);
   const [currentImg, setCurrentImg] = useState(null);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  const { userData } = useContext(AuthContext);
 
   const getAllBlogs = async (data) => {
     setLoading(true);
@@ -69,65 +72,67 @@ const Blogs = () => {
 
   return (
     <Loader isLoading={loading}>
-      <FormModalButton
-        className="d-flex m-3 justify-content-end"
-        buttonTitle="+ New Blog"
-        heading="Create a New Blog"
-        onSubmit={() => {}}
-        open={open}
-        setOpen={setOpen}
-      >
-        <FormBuilder onSubmit={handleCreate}>
-          {(register, errors, { control }) => {
-            return (
-              <>
-                <div className="row mt-3">
-                  <Input
-                    name="title"
-                    register={register}
-                    errors={errors}
-                    required={true}
-                    class_name="col-12"
-                    label={'Blog Title'}
-                  />
-                  <RichTextEditor
-                    control={control}
-                    name="content"
-                    errors={errors}
-                    class_name="col-12"
-                    label={'Blog Description'}
-                  />
-
+      {userData.isPending && (
+        <FormModalButton
+          className="d-flex m-3 justify-content-end"
+          buttonTitle="+ New Blog"
+          heading="Create a New Blog"
+          onSubmit={() => {}}
+          open={open}
+          setOpen={setOpen}
+        >
+          <FormBuilder onSubmit={handleCreate}>
+            {(register, errors, { control }) => {
+              return (
+                <>
                   <div className="row mt-3">
-                    {currentImg && (
-                      <ThumbImg
-                        src={selectedBlog?.cover_picture}
-                        style={{ width: '64px', height: 'auto', objectFit: 'contain' }}
-                        onClose={() => {
+                    <Input
+                      name="title"
+                      register={register}
+                      errors={errors}
+                      required={true}
+                      class_name="col-12"
+                      label={'Blog Title'}
+                    />
+                    <RichTextEditor
+                      control={control}
+                      name="content"
+                      errors={errors}
+                      class_name="col-12"
+                      label={'Blog Description'}
+                    />
+
+                    <div className="row mt-3">
+                      {currentImg && (
+                        <ThumbImg
+                          src={selectedBlog?.cover_picture}
+                          style={{ width: '64px', height: 'auto', objectFit: 'contain' }}
+                          onClose={() => {
+                            setCurrentImg(null);
+                          }}
+                        />
+                      )}
+                      <FileInput
+                        name="image"
+                        errors={errors}
+                        register={register}
+                        class_name="col-12"
+                        onChange={() => {
                           setCurrentImg(null);
                         }}
+                        label={'Cover Picture'}
                       />
-                    )}
-                    <FileInput
-                      name="image"
-                      errors={errors}
-                      register={register}
-                      class_name="col-12"
-                      onChange={() => {
-                        setCurrentImg(null);
-                      }}
-                      label={'Cover Picture'}
-                    />
+                    </div>
+                    <Button variant="contained" type="submit">
+                      Submit
+                    </Button>
                   </div>
-                  <Button variant="contained" type="submit">
-                    Submit
-                  </Button>
-                </div>
-              </>
-            );
-          }}
-        </FormBuilder>
-      </FormModalButton>
+                </>
+              );
+            }}
+          </FormBuilder>
+        </FormModalButton>
+      )}
       <Grid container spacing={6}>
         <Grid item xs={12} sx={{ paddingBottom: 4 }}>
           <Typography variant="h5">Blogs</Typography>

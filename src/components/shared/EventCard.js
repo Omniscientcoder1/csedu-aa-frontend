@@ -6,9 +6,12 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import CardContent from '@mui/material/CardContent';
 import { formatDateTime } from 'src/views/utilities/utils';
+import { AuthContext } from 'src/context/AuthContext';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router';
 
 const EventCard = ({ event, handleSubscribe }) => {
+  const { userData } = useContext(AuthContext);
   const navigate = useNavigate();
   return (
     <Card className="mb-3">
@@ -55,26 +58,33 @@ const EventCard = ({ event, handleSubscribe }) => {
                   {formatDateTime(event.end_datetime)}
                 </Typography>
               </Box>
-              <Typography variant="body2" sx={{ mb: 3, display: 'flex', flexDirection: 'column' }}>
-                <span>
-                  <b>Subscribe Now</b>
-                </span>
-                <span>To Join The Event</span>
-              </Typography>
-              <Button
-                variant="contained"
-                onClick={() => handleSubscribe(event.id, event.is_subscriber)}
-                disabled={event?.is_manager}
-              >
-                {event?.is_subscriber ? 'Unsubscribe' : 'Subscribe'}
-              </Button>
-              <Button
-                className="ms-2"
-                variant="contained"
-                onClick={() => navigate(`/events-list/${event?.id}`)}
-              >
-                View
-              </Button>
+              {!userData?.is_pending && (
+                <>
+                  <Typography
+                    variant="body2"
+                    sx={{ mb: 3, display: 'flex', flexDirection: 'column' }}
+                  >
+                    <span>
+                      <b>Subscribe Now</b>
+                    </span>
+                    <span>To Join The Event</span>
+                  </Typography>
+                  <Button
+                    variant="contained"
+                    onClick={() => handleSubscribe(event.id, event.is_subscriber)}
+                    disabled={event?.is_manager}
+                  >
+                    {event?.is_subscriber ? 'Unsubscribe' : 'Subscribe'}
+                  </Button>
+                  <Button
+                    className="ms-2"
+                    variant="contained"
+                    onClick={() => navigate(`/events-list/${event?.id}`)}
+                  >
+                    View
+                  </Button>
+                </>
+              )}
             </Box>
           </CardContent>
         </Grid>

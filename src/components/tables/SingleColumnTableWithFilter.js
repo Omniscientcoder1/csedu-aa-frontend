@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Table,
   TableBody,
@@ -23,6 +23,8 @@ import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import Loader from '../container/Loader';
 import './table-pagination.css';
 import { useNavigate } from 'react-router';
+import { roles } from 'src/constants/options';
+import { AuthContext } from 'src/context/AuthContext';
 
 const useStyles = makeStyles({
   table: {
@@ -46,7 +48,6 @@ const useStyles = makeStyles({
     margin: '10px',
     padding: '1rem',
   },
-  
 });
 
 const SingleColumnTableWithFilter = ({ columns, fetchData, filterFields }) => {
@@ -57,6 +58,7 @@ const SingleColumnTableWithFilter = ({ columns, fetchData, filterFields }) => {
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
   const navigate = useNavigate();
+  const { userData } = useContext(AuthContext);
 
   const handleFilterSubmit = (data) => {
     console.log(data);
@@ -124,33 +126,56 @@ const SingleColumnTableWithFilter = ({ columns, fetchData, filterFields }) => {
                               />
                               <div style={{ marginLeft: 12 }}>
                                 <div className="d-flex align-items-center">
-                                <Typography variant="h5" component="h2">
-                                  {row.first_name
-                                    ? row.first_name + ' ' + row.last_name
-                                    : 'Unnamed'}
-                                </Typography>
-                                <div style={{ height: '100%', width: '15px' }}></div>
-                                {row.membership !== 'None' && (
-                                  <div style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '5px 10px', textAlign: 'center', backgroundColor: '#f0f0f0' }}>
-                                    {row.membership + ' Member'}
-                                  </div>
-                                )}
+                                  <Typography variant="h5" component="h2">
+                                    {row.first_name
+                                      ? row.first_name + ' ' + row.last_name
+                                      : 'Unnamed'}
+                                  </Typography>
+                                  <div style={{ height: '100%', width: '15px' }}></div>
+                                  {row.role !== 'None' && (
+                                    <div
+                                      style={{
+                                        border: '1px solid #ccc',
+                                        borderRadius: '5px',
+                                        padding: '5px 10px',
+                                        textAlign: 'center',
+                                        backgroundColor: '#f0f0f0',
+                                      }}
+                                    >
+                                      {roles.find((role) => role.value === row.role)?.name}
+                                    </div>
+                                  )}
+                                  <div style={{ width: '10px' }}></div>
+                                  {row.membership !== 'None' && (
+                                    <div
+                                      style={{
+                                        border: '1px solid #ccc',
+                                        borderRadius: '5px',
+                                        padding: '5px 10px',
+                                        textAlign: 'center',
+                                        backgroundColor: '#f0f0f0',
+                                      }}
+                                    >
+                                      {row.membership + ' Member'}
+                                    </div>
+                                  )}
                                 </div>
                                 <Typography color="textSecondary">{row.email_address}</Typography>
                                 <Typography variant="body2" component="p">
-                                  From {row.batch_number ?? 'Unknown'} Batch
+                                  {row.batch_number ?? 'Unknown'} Batch
                                 </Typography>
                               </div>
                             </div>
-
-                            <Button
-                              className={classes.button}
-                              onClick={() => navigate(`${row.username}`)}
-                              variant="contained"
-                              color="primary"
-                            >
-                              View Details
-                            </Button>
+                            {!userData?.is_pending && (
+                              <Button
+                                className={classes.button}
+                                onClick={() => navigate(`${row.username}`)}
+                                variant="contained"
+                                color="primary"
+                              >
+                                View Details
+                              </Button>
+                            )}
                           </div>
                         </CardContent>
                       </Card>

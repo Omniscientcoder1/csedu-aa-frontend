@@ -11,30 +11,14 @@ import { toast } from 'react-toastify';
 import { Avatar, TextField } from '@mui/material';
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
 import { uploadImage } from 'src/services/query/image';
+import { getBatches } from 'src/constants/options';
 
 const TabAccount = () => {
   // ** State
   const [profile, setProfile] = useState(null);
+  const [image, setImage] = useState(null);
 
   const { userData } = useContext(AuthContext);
-
-  const generateBatchOptions = () => {
-    const options = [];
-  
-    // Loop for BSc batches
-    for (let i = 1; i <= 30; i++) {
-      options.push({ name: `BSc - ${i.toString().padStart(2, '0')}`, value: `BSc - ${i.toString().padStart(2, '0')}` });
-    }
-  
-    // Loop for MSc batches
-    for (let i = 1; i <= 30; i++) {
-      options.push({ name: `MSc - ${i.toString().padStart(2, '0')}`, value: `MSc - ${i.toString().padStart(2, '0')}` });
-    }
-    
-    options.push({ name: `PHD`, value: `PHD` });
-  
-    return options;
-  };
 
   useEffect(() => {
     setProfile({
@@ -44,7 +28,16 @@ const TabAccount = () => {
         return acc;
       }, {}),
     });
+    if (userData?.profile_picture) {
+      setImage(userData.profile_picture);
+    }
   }, [userData]);
+
+  const handleFileInputChange = (event) => {
+    const file = event.target.files[0];
+    const imageUrl = URL.createObjectURL(file);
+    setImage(imageUrl);
+  };
 
   const handleSubmit = async (data) => {
     try {
@@ -80,8 +73,8 @@ const TabAccount = () => {
               <h3>Basic Information</h3>
               <div className="d-flex flex-column align-items-center">
                 <Avatar
-                  src={userData?.profile_picture || ProfileImg}
-                  alt={userData?.profile_picture || ProfileImg}
+                  src={image}
+                  alt={image}
                   sx={{
                     width: 128,
                     height: 128,
@@ -94,6 +87,7 @@ const TabAccount = () => {
                   errors={errors}
                   register={register}
                   label={'Image'}
+                  onChange={handleFileInputChange}
                 />
               </div>
 
@@ -127,7 +121,7 @@ const TabAccount = () => {
                   register={register}
                   class_name="col-6"
                   label={'Batch Number'}
-                  options={generateBatchOptions()}
+                  options={getBatches()}
                 />
                 <Input
                   defaultValue={userData?.hometown}

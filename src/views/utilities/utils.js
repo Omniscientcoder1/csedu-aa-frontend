@@ -2,7 +2,7 @@ import { Link } from '@mui/material';
 
 export function getFullName(user) {
   return (
-    <Link href={`/students-list/${user.username}`}>
+    <Link href={`/alumni-list/${user.username}`}>
       {user.first_name ? `${user.first_name} ${user.last_name}` : user.username}
     </Link>
   );

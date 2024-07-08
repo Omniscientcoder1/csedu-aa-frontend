@@ -12,7 +12,7 @@ export const getUserDetails = async () => {
 
 export const getUserProfile = async () => {
   try {
-    const response = await privateAxios.get(`${endpoints.BASIC_PROFILE}`);
+    const response = await privateAxios.get(`${endpoints.PROFILE}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -75,6 +75,12 @@ export const getUserDetailByUsername = async (username) => {
 
 export const makeAdmin = async (data) => {
   return await privateAxios.post(endpoints.MANAGE_ADMINS, {
+    ...data,
+  });
+};
+
+export const setRole = async (data) => {
+  return await privateAxios.post(endpoints.SET_ROLE, {
     ...data,
   });
 };

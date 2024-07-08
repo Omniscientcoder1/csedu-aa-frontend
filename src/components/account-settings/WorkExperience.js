@@ -51,7 +51,7 @@ const WorkExperience = ({ setLoading }) => {
           setOpen={setOpen}
           buttonTitle="+ New Work Experience"
           heading="Add New Work Experience"
-          maxWidth="lg"
+          maxWidth="sm"
         >
           <FormBuilder onSubmit={handleSubmit}>
             {(register, errors, { control, setValue }) => {
@@ -109,9 +109,14 @@ const WorkExperience = ({ setLoading }) => {
                     label={'I currently work here'}
                   />
 
-                  <Button className="text-right" type="submit" variant="contained" color="primary">
-                    Submit
-                  </Button>
+                  <div className="d-flex justify-content-center">
+                    <Button className="me-5" type="submit" variant="contained" color="primary">
+                      Submit
+                    </Button>
+                    <Button onClick={() => setOpen(false)} variant="contained" color="error">
+                      Close
+                    </Button>
+                  </div>
                 </>
               );
             }}
@@ -160,7 +165,7 @@ const WorkExperience = ({ setLoading }) => {
                 />
               </div>
             </div>
-            <div className="d-flex">
+            <div className="d-flex flex-column ps-3">
               <Button
                 onClick={() => {
                   setExperience(experience);
@@ -168,13 +173,13 @@ const WorkExperience = ({ setLoading }) => {
                 }}
                 color="success"
                 variant="outlined"
-                className="m-2"
+                className="mt-2 w-100"
               >
                 Edit
               </Button>
               <Button
                 color="error"
-                className="mt-2 mb-2"
+                className="mt-3 w-100"
                 variant="contained"
                 onClick={() => handleDelete(experience.id)}
               >

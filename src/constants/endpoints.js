@@ -22,6 +22,7 @@ const endpoints = {
   EXPERIENCE: 'accounts/profile/work-experiences/',
   MANAGE_ADMINS: 'accounts/make-admin/',
   REMOVE_ADMIN: 'accounts/remove-admin/',
+  SET_ROLE: 'accounts/set-role/',
 
   BLOGS: 'blogs/',
   BLOG_CREATE: 'blogs/create/',

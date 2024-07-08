@@ -119,7 +119,7 @@ const EventsManagement = () => {
   };
 
   const columns = [
-    { id: 'creator', label: 'Creator', render: (data) => <p>{getFullName(data)}</p> },
+    { id: 'creator', label: 'Creator', render: (data) => <div>{getFullName(data)}</div> },
     { id: 'title', label: 'Title' },
     {
       id: 'start_datetime',
@@ -151,10 +151,10 @@ const EventsManagement = () => {
           )}
           {row.is_manager && (
             <Button
+              className='me-3'
               onClick={() => {
                 setSelectedEvent(row);
                 setOpenManager(true);
-                console.log(row);
                 setManagers(row.managers);
               }}
               size="small"
@@ -225,6 +225,7 @@ const EventsManagement = () => {
           className="d-flex m-3 justify-content-end"
           buttonTitle="+ New Event"
           heading="Create New Event"
+          maxWidth='md'
         >
           <FormBuilder onSubmit={handleSubmit}>
             {(register, errors, { control }) => {
@@ -305,9 +306,14 @@ const EventsManagement = () => {
                     />
                   </div>
 
-                  <Button className="text-right" type="submit" variant="contained" color="primary">
-                    Submit
-                  </Button>
+                  <div className="d-flex justify-content-start">
+                    <Button className="me-3" type="submit" variant="contained" color="primary">
+                      Submit
+                    </Button>
+                    <Button onClick={() => setOpen(false)} variant="contained" color="error">
+                      Close
+                    </Button>
+                  </div>
                 </>
               );
             }}

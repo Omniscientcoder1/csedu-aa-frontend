@@ -10,6 +10,8 @@ import Students from 'src/views/user/students/Students';
 import Blogs from 'src/views/user/blogs/Blogs';
 import Profile from 'src/views/dashboard/Profile';
 import AuthGuard from 'src/components/container/AuthGuard';
+import AuthVerifiedGuard from 'src/components/container/AuthVerifiedGuard';
+import AuthAdminGuard from 'src/components/container/AuthAdminGuard';
 import BlogDetailsPage from 'src/views/user/blogs/BlogDetails';
 import EventsDetails from 'src/views/user/events/EventDetails';
 import StudentDetails from 'src/views/user/students/StudentDetails';
@@ -20,7 +22,7 @@ import UnAuthGuard from 'src/components/container/UnAuthGuard';
 import ForgotPassword from 'src/views/authentication/ForgotPassword';
 import ResetPassword from 'src/views/authentication/ResetPassword';
 import Payments from 'src/views/user/payments/Payments';
-
+import TabAccount from 'src/components/account-settings/TabAccount';
 
 /* ***Layouts**** */
 const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
@@ -29,7 +31,9 @@ const NoSidebarLayout = Loadable(lazy(() => import('../layouts/full/NoSidebarLay
 
 /* ****Pages***** */
 const Dashboard = Loadable(lazy(() => import('../views/dashboard/Dashboard')));
-const NonAuthenticatedDashboard = Loadable(lazy(() => import('../views/dashboard/NonAuthenticatedDashboard')));
+const NonAuthenticatedDashboard = Loadable(
+  lazy(() => import('../views/dashboard/NonAuthenticatedDashboard')),
+);
 const Icons = Loadable(lazy(() => import('../views/icons/Icons')));
 const TypographyPage = Loadable(lazy(() => import('../views/utilities/TypographyPage')));
 const Shadow = Loadable(lazy(() => import('../views/utilities/Shadow')));
@@ -56,72 +60,72 @@ const Router = [
         path: '/users-management',
         exact: true,
         element: (
-          <AuthGuard>
+          <AuthAdminGuard>
             <UsersManagement />
-          </AuthGuard>
+          </AuthAdminGuard>
         ),
       },
       {
         path: '/hall-of-fame',
         exact: true,
         element: (
-          <AuthGuard>
+          <AuthAdminGuard>
             <HallOfFame />
-          </AuthGuard>
+          </AuthAdminGuard>
         ),
       },
       {
         path: '/events-management',
         exact: true,
         element: (
-          <AuthGuard>
+          <AuthAdminGuard>
             <EventsManagement />
-          </AuthGuard>
+          </AuthAdminGuard>
         ),
       },
       {
         path: '/emails-management',
         exact: true,
         element: (
-          <AuthGuard>
+          <AuthAdminGuard>
             <EmailsManagement />
-          </AuthGuard>
+          </AuthAdminGuard>
         ),
       },
       {
         path: '/pending-registrations',
         exact: true,
         element: (
-          <AuthGuard>
+          <AuthAdminGuard>
             <PendingRegistrations />
-          </AuthGuard>
+          </AuthAdminGuard>
         ),
       },
       {
         path: '/membership-claims',
         exact: true,
         element: (
-          <AuthGuard>
+          <AuthAdminGuard>
             <MembershipClaims />
-          </AuthGuard>
+          </AuthAdminGuard>
         ),
       },
       {
         path: '/emails-list',
         exact: true,
         element: (
-          <AuthGuard>
+          <AuthVerifiedGuard>
             <Emails />
-          </AuthGuard>
+          </AuthVerifiedGuard>
         ),
       },
       {
         path: '/payments',
         exact: true,
         element: (
-          <AuthGuard>
+          <AuthVerifiedGuard>
             <Payments />
-          </AuthGuard>
+          </AuthVerifiedGuard>
         ),
       },
       {
@@ -137,13 +141,13 @@ const Router = [
         path: '/events-list/:id',
         exact: true,
         element: (
-          <AuthGuard>
+          <AuthVerifiedGuard>
             <EventsDetails />
-          </AuthGuard>
+          </AuthVerifiedGuard>
         ),
       },
       {
-        path: '/students-list',
+        path: '/alumni-list',
         exact: true,
         element: (
           <AuthGuard>
@@ -152,12 +156,12 @@ const Router = [
         ),
       },
       {
-        path: '/students-list/:username',
+        path: '/alumni-list/:username',
         exact: true,
         element: (
-          <AuthGuard>
+          <AuthVerifiedGuard>
             <StudentDetails />
-          </AuthGuard>
+          </AuthVerifiedGuard>
         ),
       },
       {
@@ -179,7 +183,7 @@ const Router = [
         ),
       },
       {
-        path: '/accounts-management',
+        path: '/profile',
         exact: true,
         element: (
           <AuthGuard>
@@ -222,26 +226,38 @@ const Router = [
     element: <BlankLayout />,
     children: [
       { path: '404', element: <Error /> },
-      { path: '/auth/register', element: (
-      <UnAuthGuard>
-        <Register />
-      </UnAuthGuard>
-      ) },
-      { path: '/auth/login', element: (
-      <UnAuthGuard>
-        <Login />
-      </UnAuthGuard>
-      ) },
-      { path: '/auth/forgot-password', element: (
-        <UnAuthGuard>
-          <ForgotPassword />
-        </UnAuthGuard>
-        ) },
-      { path: '/auth/reset-password', element: (
-        <UnAuthGuard>
-          <ResetPassword />
-        </UnAuthGuard>
-        ) },
+      {
+        path: '/auth/register',
+        element: (
+          <UnAuthGuard>
+            <Register />
+          </UnAuthGuard>
+        ),
+      },
+      {
+        path: '/auth/login',
+        element: (
+          <UnAuthGuard>
+            <Login />
+          </UnAuthGuard>
+        ),
+      },
+      {
+        path: '/auth/forgot-password',
+        element: (
+          <UnAuthGuard>
+            <ForgotPassword />
+          </UnAuthGuard>
+        ),
+      },
+      {
+        path: '/auth/reset-password',
+        element: (
+          <UnAuthGuard>
+            <ResetPassword />
+          </UnAuthGuard>
+        ),
+      },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },
@@ -249,11 +265,14 @@ const Router = [
     path: '/home',
     element: <NoSidebarLayout />,
     children: [
-      { path: '/home', element: (
-      <UnAuthGuard>
-        <NonAuthenticatedDashboard />
-      </UnAuthGuard>
-      ) },
+      {
+        path: '/home',
+        element: (
+          <UnAuthGuard>
+            <NonAuthenticatedDashboard />
+          </UnAuthGuard>
+        ),
+      },
       { path: '*', element: <Navigate to="/auth/404" /> },
     ],
   },

@@ -7,37 +7,27 @@ import CardHeader from '@mui/material/CardHeader';
 import { FormBuilder, Input, Textarea } from 'src/components/forms/FormBuilder';
 import FormModalButton from 'src/components/tables/FormModalButton';
 import TableWithFilter from 'src/components/tables/TableWithFilter';
-import { createReferrals, getUsers, makeAdmin, removeAdmin } from 'src/services/query/user';
+import {
+  createReferrals,
+  getUsers,
+  makeAdmin,
+  removeAdmin,
+  setRole,
+} from 'src/services/query/user';
 import { Button } from '@mui/material';
 import { toast } from 'react-toastify';
 import { useContext, useState } from 'react';
 import { adminMailSend } from 'src/services/query/mails';
 import { Add, Send } from '@mui/icons-material';
 import ConfirmationPopup from 'src/components/popup/ConfirmationPopup';
+import SetRolePopup from 'src/components/popup/SetRolePopup';
 import { AuthContext } from 'src/context/AuthContext';
-
-const generateBatchOptions = () => {
-  const options = [];
-
-  // Loop for BSc batches
-  for (let i = 1; i <= 30; i++) {
-    options.push({ name: `BSc - ${i.toString().padStart(2, '0')}`, value: `BSc - ${i.toString().padStart(2, '0')}` });
-  }
-
-  // Loop for MSc batches
-  for (let i = 1; i <= 30; i++) {
-    options.push({ name: `MSc - ${i.toString().padStart(2, '0')}`, value: `MSc - ${i.toString().padStart(2, '0')}` });
-  }
-  
-  options.push({ name: `PHD`, value: `PHD` });
-
-  return options;
-};
+import { getBatches } from 'src/constants/options';
 
 const filterFields = [
   { label: 'Name', field: 'name', type: 'string' },
   { label: 'Username', field: 'username', type: 'string' },
-  { label: 'Batch', field: 'batch', type: 'select', options: generateBatchOptions() },
+  { label: 'Batch', field: 'batch', type: 'select', options: getBatches() },
   { label: 'Company', field: 'company', type: 'string' },
   { label: 'Hometown', field: 'hometown', type: 'string' },
   { label: 'Country', field: 'country', type: 'string' },
@@ -57,9 +47,10 @@ const UsersManagement = () => {
 
   const handleSubmit = async (data) => {
     try {
+      console.log(data);
       const res = await createReferrals(data);
+      toast.success(`Your referral code is sent to ${data.referred_email}.`);
       setOpen(false);
-      toast.success(`Your referral code is sent to ${data.email}.`);
     } catch (error) {
       toast.error('Error creating Referral code.');
     } finally {
@@ -103,31 +94,47 @@ const UsersManagement = () => {
     }
   };
 
+  const handleSetRole = async (username, role) => {
+    try {
+      const res = await setRole({ username: username, role: role });
+      setForceReload((state) => !state);
+      toast.success(username + ' is now the ' + role);
+    } catch (error) {
+      toast.error('Error setting role');
+    }
+  };
+
   const columns = [
     { id: 'username', label: 'Name' },
     { id: 'first_name', label: 'First Name' },
     { id: 'last_name', label: 'Last Name' },
     { id: 'email_address', label: 'Email' },
     { id: 'batch_number', label: 'Batch' },
-    { id: 'company', label: 'Company' },
-    { id: 'country', label: 'Country' },
+    { id: 'role', label: 'Role' },
+    { id: 'membership', label: 'Membership' },
     {
       id: 'admin',
       label: 'Actions',
-      render: (_, row) =>
-        !row.is_admin
-          ? userData.is_admin && (
-              <ConfirmationPopup size="small" onConfirm={() => handleAdmin(row.username)}>
-                <Button>Make Admin</Button>
-              </ConfirmationPopup>
-            )
-          : userData.is_superuser && (
-              <ConfirmationPopup onConfirm={() => handleRemoveAdmin(row.username)}>
-                <Button color="error" size="small">
-                  Remove Admin
-                </Button>
-              </ConfirmationPopup>
-            ),
+      render: (_, row) => (
+        <div>
+          {!row.is_admin
+            ? userData.is_admin && (
+                <ConfirmationPopup size="small" onConfirm={() => handleAdmin(row.username)}>
+                  <Button style={{ width: '120px' }}>Make Admin</Button>
+                </ConfirmationPopup>
+              )
+            : userData.is_superuser && (
+                <ConfirmationPopup onConfirm={() => handleRemoveAdmin(row.username)}>
+                  <Button style={{ width: '120px' }} color="error">
+                    Remove Admin
+                  </Button>
+                </ConfirmationPopup>
+              )}
+          <SetRolePopup role={row.role} onConfirm={handleSetRole} username={row.username}>
+            <Button>Set Role</Button>
+          </SetRolePopup>
+        </div>
+      ),
     },
   ];
 
@@ -146,12 +153,13 @@ const UsersManagement = () => {
                 </span>
               }
               heading="Send Invitation"
+              maxWidth="sm"
             >
               <FormBuilder onSubmit={handleSubmit}>
                 {(register, errors, { control }) => {
                   return (
                     <>
-                      <div className="row mt-3">
+                      <div className="row mt-3 mb-3">
                         <Input
                           name="referred_email"
                           errors={errors}
@@ -161,15 +169,32 @@ const UsersManagement = () => {
                           label={'Email'}
                         />
                       </div>
-
-                      <Button
-                        className="text-right"
-                        type="submit"
-                        variant="contained"
-                        color="primary"
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          gap: '20px',
+                          width: '100%',
+                        }}
                       >
-                        Submit
-                      </Button>
+                        <Button
+                          className="text-right"
+                          type="submit"
+                          variant="contained"
+                          color="primary"
+                          style={{ flexGrow: 1 }}
+                        >
+                          Submit
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          onClick={() => setOpen(false)}
+                          color="error"
+                          style={{ flexGrow: 1 }}
+                        >
+                          Cancel
+                        </Button>
+                      </div>
                     </>
                   );
                 }}
@@ -187,6 +212,7 @@ const UsersManagement = () => {
                 onSubmit={() => {}}
                 open={emailDialogOpen}
                 setOpen={setEmailDialogOpen}
+                maxWidth='sm'
               >
                 <FormBuilder onSubmit={handleMailSend}>
                   {(register, errors, { control }) => {
@@ -209,9 +235,26 @@ const UsersManagement = () => {
                             class_name="col-12"
                             label={'Email Body'}
                           />
-                          <Button variant="outlined" type="submit">
-                            Submit
-                          </Button>
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'center',
+                              gap: '20px',
+                              width: '100%',
+                            }}
+                          >
+                            <Button variant="outlined" type="submit" style={{ flexGrow: 1 }}>
+                              Submit
+                            </Button>
+                            <Button
+                              variant="outlined"
+                              onClick={() => setEmailDialogOpen(false)}
+                              color="error"
+                              style={{ flexGrow: 1 }}
+                            >
+                              Cancel
+                            </Button>
+                          </div>
                         </div>
                       </>
                     );

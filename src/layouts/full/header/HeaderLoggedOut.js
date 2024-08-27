@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, AppBar, Toolbar, styled, Stack, IconButton, Badge, Button } from '@mui/material';
+import { Box, AppBar, Toolbar, styled, Stack, Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Logo from '../shared/logo/Logo';
@@ -13,7 +13,7 @@ const HeaderLoggedOut = (props) => {
 
   const AppBarStyled = styled(AppBar)(({ theme }) => ({
     boxShadow: 'none',
-    background: theme.palette.background.paper,
+    background: theme.palette.primary.main, // Updated color
     justifyContent: 'center',
     backdropFilter: 'blur(4px)',
     [theme.breakpoints.up('lg')]: {
@@ -22,7 +22,11 @@ const HeaderLoggedOut = (props) => {
   }));
   const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
     width: '100%',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary, // Updated text color
+  }));
+
+  const ButtonStyled = styled(Button)(({ theme }) => ({
+    color: theme.palette.text.primary, // Updated button text color
   }));
 
   return (
@@ -41,9 +45,7 @@ const HeaderLoggedOut = (props) => {
         >
           <IconMenu width="20" height="20" />
         </IconButton> */}
-        <Logo authenticated={false}/>
-
-
+        <Logo />
         {/* <IconButton
           size="large"
           aria-label="show 11 new notifications"
@@ -59,16 +61,21 @@ const HeaderLoggedOut = (props) => {
           <Badge variant="dot" color="primary">
             <IconBellRinging size="21" stroke="1.5" />
           </Badge>
-
         </IconButton> */}
         <Box flexGrow={1} />
-        <Stack spacing={1} direction="row" alignItems="center">
-        <Button color="inherit" component={Link} to="/auth/login">
-          Log In
-        </Button>
-        <Button color="inherit" component={Link} to="/auth/register">
-          Register
-        </Button>
+        <Stack spacing={2} direction="row" alignItems="center">
+          <ButtonStyled component={Link} to="/about">
+            About
+          </ButtonStyled>
+          <ButtonStyled component={Link} to="/contact">
+            Contact Us
+          </ButtonStyled>
+          <ButtonStyled component={Link} to="/auth/login">
+            Log In
+          </ButtonStyled>
+          <ButtonStyled component={Link} to="/auth/register">
+            Register
+          </ButtonStyled>
         </Stack>
       </ToolbarStyled>
     </AppBarStyled>

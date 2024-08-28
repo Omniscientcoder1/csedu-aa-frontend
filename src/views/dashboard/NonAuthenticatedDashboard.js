@@ -1,10 +1,16 @@
+
 import React, { useEffect, useState } from 'react';
 import { Typography, Button, TextField, Divider } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { useNavigate, Link } from 'react-router-dom'; // Use useNavigate instead of useHistory
 import { getCommittee } from 'src/services/query/committee';
 import CommitteeSlider from 'src/components/shared/CommitteeSlider';
 import CustomCard from 'src/views/dashboard/components/CustomCard';
 import cards from 'src/views/dashboard/components/Cards'; // Importing the cards array
+
+// Import images
+import backgroundQuote1 from 'src/assets/images/background_quote1.png';
+import backgroundQuote2 from 'src/assets/images/background_quote2.png';
 
 const useStyles = makeStyles((theme) => ({
   // Hero section and button styles...
@@ -39,6 +45,8 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: '20px',
       paddingRight: '0',
     },
+    position: 'relative',
+    zIndex: 2, // Ensure the form stays above the background image
   },
   title: {
     fontSize: '2rem',
@@ -152,7 +160,7 @@ const useStyles = makeStyles((theme) => ({
   },
   videoContainer: {
     flex: '1 1 50%',
-    zIndex: 2,
+    zIndex: 2, // Ensure the video stays above the background image
     paddingLeft: '20px',
     '@media (max-width: 1024px)': {
       maxWidth: '100%',
@@ -166,9 +174,17 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '8px',
     boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
   },
+  backgroundImage: {
+    position: 'absolute',
+    width: '200px', // Example size, adjust as needed
+    height: '200px', // Example size, adjust as needed
+    zIndex: 1, // Ensure the image stays behind the content
+    opacity: 0.5, // Adjust opacity as needed
+    pointerEvents: 'none', // Prevent interaction with the image
+  },
   sectionTitle: {
-    fontSize: '3.5rem', // Increase the font size
-    fontWeight: 'bold', // Make the text bold
+    fontSize: '3.5rem',
+    fontWeight: 'bold',
     marginTop: '40px',
     marginBottom: '20px',
     color: '#333',
@@ -183,6 +199,13 @@ const useStyles = makeStyles((theme) => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
     gap: '20px',
+  },
+  customCard: {
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+    '&:hover': {
+      transform: 'translateY(-5px)',
+      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+    },
   },
   buttonContainer: {
     display: 'flex',
@@ -207,6 +230,8 @@ const useStyles = makeStyles((theme) => ({
 
 const NonAuthenticatedDashboard = () => {
   const classes = useStyles();
+  const navigate = useNavigate(); // Initialize navigate
+
   const [committee, setCommittee] = useState([]);
 
   const fetchCommittee = async () => {
@@ -222,8 +247,16 @@ const NonAuthenticatedDashboard = () => {
     fetchCommittee();
   }, []);
 
+  const handleCardClick = () => {
+    navigate('/auth/login'); // Redirect to login page on card click
+  };
+
   return (
     <div>
+      {/* Background Images */}
+      <img src={backgroundQuote1} alt="Background 1" className={classes.backgroundImage} style={{ bottom: '10%', left: '10%' }} />
+      <img src={backgroundQuote2} alt="Background 2" className={classes.backgroundImage} style={{ top: '10%', right: '10%' }} />
+
       {/* Hero Section */}
       <div className={classes.heroSection}>
         <div className={classes.leftContainer}>
@@ -234,7 +267,7 @@ const NonAuthenticatedDashboard = () => {
 
           <TextField
             label="Username"
-            placeholder="abcd@gmail.com"
+            placeholder="abcd@example.com"
             variant="outlined"
             className={classes.inputField}
           />
@@ -250,12 +283,6 @@ const NonAuthenticatedDashboard = () => {
 
           <div className={classes.dividerText}>or</div>
 
-          <Button variant="contained" className={classes.googleButton}>
-            Login with Google
-          </Button>
-          <Button variant="contained" className={classes.secondaryButton}>
-            Complete Previous Application
-          </Button>
           <Button variant="contained" className={classes.greenButton}>
             Apply for New Membership
           </Button>
@@ -336,46 +363,88 @@ const NonAuthenticatedDashboard = () => {
 
       {/* Current Committee Section */}
       <div>
+        <Divider
+          sx={{
+            height: 4,
+            backgroundColor: '#000',
+            margin: '16px 0',
+          }}
+        />
         <Typography variant="h3">Current Committee</Typography>
         <CommitteeSlider committee={committee} />
       </div>
 
       {/* Event Highlights Section */}
       <div className={classes.sectionContainer}>
-      <Typography variant='h3'>Event Highlights</Typography>
+        <Typography variant="h3">Event Highlights</Typography>
+        <Divider
+          sx={{
+            height: 4,
+            backgroundColor: '#000',
+            margin: '16px 0',
+          }}
+        />
         <div className={classes.cardGrid}>
           {cards.slice(0, 2).map((card, index) => (
-            <CustomCard
+            <div
               key={index}
-              title={card.title}
-              description={card.description}
-              image={card.image}
-            />
+              className={classes.customCard}
+              onClick={handleCardClick}
+              role="button"
+              tabIndex={0}
+            >
+              <CustomCard
+                title={card.title}
+                description={card.description}
+                image={card.image}
+              />
+            </div>
           ))}
         </div>
       </div>
 
       {/* Alumni Success Stories Section */}
       <div className={classes.sectionContainer}>
-        <Typography variant='h3'>Alumni Success Stories</Typography>
+        <Typography variant="h3">Alumni Success Stories</Typography>
+        <Divider
+          sx={{
+            height: 4,
+            backgroundColor: '#000',
+            margin: '16px 0',
+          }}
+        />
         <div className={classes.cardGrid}>
           {cards.slice(2, 4).map((card, index) => (
-            <CustomCard
+            <div
               key={index}
-              title={card.title}
-              description={card.description}
-              image={card.image}
-            />
+              className={classes.customCard}
+              onClick={handleCardClick}
+              role="button"
+              tabIndex={0}
+            >
+              <CustomCard
+                title={card.title}
+                description={card.description}
+                image={card.image}
+              />
+            </div>
           ))}
         </div>
       </div>
 
       {/* Get Involved Section */}
       <div className={classes.sectionContainer}>
-        <Typography variant='h3'>Get Involved</Typography>
+        <Typography variant="h3">Get Involved</Typography>
+        <Divider
+          sx={{
+            height: 4,
+            backgroundColor: '#000',
+            margin: '16px 0',
+          }}
+        />
         <p style={{ textAlign: 'justify' }}>
           We encourage all alumni to stay connected and get involved in the various initiatives and
-          programs organized by CUAA. Whether it's mentoring current students, attending alumni
+          programs organized by CSEDUAA. Whether it's mentoring current students, attending alumni
           events, or contributing to scholarship funds, your involvement is crucial to the success
           of our community.
         </p>

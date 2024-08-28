@@ -2,26 +2,29 @@
 
 const cards = [
     {
-      title: "Event 1",
-      description: "Description for Event 1",
+      title: "Flood Relief Campaign",
+      description: "Help the flood victims of Feni",
       image: "/images/event1.jpg", // Ensure this path is correct and accessible
     },
     {
-      title: "Event 2",
-      description: "Description for Event 2",
+      title: "Laptop Financing Campaign",
+      description: "Your donation can help DU students get Laptops",
       image: "/images/event2.jpg", // Ensure this path is correct and accessible
     },
     {
       title: "Success Story 1",
-      description: "Description for Success Story 1",
+      description: "Delve into the success stories of your peers",
       image: "/images/success1.jpg", // Ensure this path is correct and accessible
     },
     {
       title: "Success Story 2",
-      description: "Description for Success Story 2",
+      description: "Check out the amazing story of how Mr. Faisal became the CTO of Bangladesh Finance",
       image: "/images/success2.jpg", // Ensure this path is correct and accessible
     },
   ];
   
   export default cards;
+
+
+
   

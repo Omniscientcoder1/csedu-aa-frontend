@@ -36,7 +36,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <PageContainer title="Forgot Password" description="this is foegot password page">
+    <PageContainer title="Forgot Password" description="this is forget password page">
       <Box
         sx={{
           position: 'relative',
